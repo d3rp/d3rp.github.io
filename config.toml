@@ -1,9 +1,11 @@
-baseURL         = "https://rojun.gitlab.io/hugo-blog"
+baseURL         = "https://rojun.gitlab.io/hugo-blog/"
 languageCode    = "en-us"
 title           = "5 min ninja"
 theme           = "cocoa"
 contentdir      = "content"
-pygmentsuseclasses = true
+publishdir      = "public"
+pygmentsUseClasses = true
+canonifyurls    = true
 
 [permalinks]
 blog            = "blog/:slug/"
