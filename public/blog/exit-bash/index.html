@@ -168,7 +168,7 @@ I&#39;m not considering Bash appropriate for writing any important application (
                     <div class="date" title='Tue May 15 2018 17:58:22 EEST'>May 15, 2018</div>
                     
                     
-		    <div class="reading-time"><div class="middot"></div>16 minutes read</div>
+		    <div class="reading-time"><div class="middot"></div>15 minutes read</div>
                     
                 </div>
             </div>
@@ -464,85 +464,50 @@ The solution, again, is to first create the message and assign it to a variable,
 <h2>The truth about set -e</h2>
 <p>Before we can go any further, we have to really understand what <code>set -e</code> does, and more importantly, doesn't do.</p>
 <p>From <code>man set</code> and also the <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_25">POSIX specification</a>:</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 398)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
+<pre class="code bash literal-block">
+When this option is on, when any <span class="name builtin">command</span> fails <span class="operator">(</span><span class="keyword">for</span> any of the reasons
+listed  in Section <span class="literal number">2</span>.8.1, Consequences of Shell Errors or by returning
+an <span class="name builtin">exit</span> status greater than zero<span class="operator">)</span>, the shell  immediately  shall  <span class="name builtin">exit</span>
+with the following exceptions:
 
-    When this option is on, when any command fails (for any of the reasons
-    listed  in Section 2.8.1, Consequences of Shell Errors or by returning
-    an exit status greater than zero), the shell  immediately  shall  exit
-    with the following exceptions:
+  <span class="literal number">1</span>. The  failure of any individual <span class="name builtin">command</span> in a multi-command pipeline
+     shall not cause the shell to exit. Only the failure of  the  pipe-
+     line itself shall be considered.
 
-      1. The  failure of any individual command in a multi-command pipeline
-         shall not cause the shell to exit. Only the failure of  the  pipe-
-         line itself shall be considered.
+  <span class="literal number">2</span>. The  −e  setting shall be ignored when executing the compound list
+     following the <span class="keyword">while</span>, <span class="keyword">until</span>, <span class="keyword">if</span>, or <span class="keyword">elif</span> reserved word, a  pipeline
+     beginning  with  the !  reserved word, or any <span class="name builtin">command</span> of an AND-OR
+     list other than the last.
 
-      2. The  −e  setting shall be ignored when executing the compound list
-         following the while, until, if, or elif reserved word, a  pipeline
-         beginning  with  the !  reserved word, or any command of an AND-OR
-         list other than the last.
+  <span class="literal number">3</span>. If the <span class="name builtin">exit</span> status of a compound <span class="name builtin">command</span>  other  than  a  subshell
+     <span class="name builtin">command</span>  was  the  result of a failure <span class="keyword">while</span> −e was being ignored,
+     <span class="keyword">then</span> −e shall not apply to this command.
 
-      3. If the exit status of a compound command  other  than  a  subshell
-         command  was  the  result of a failure while −e was being ignored,
-         then −e shall not apply to this command.
-
-      This requirement applies to the shell environment  and  each  subshell
-      environment separately.
-
+  This requirement applies to the shell environment  and  each  subshell
+  environment separately.
 </pre>
-</div>
 <p>Ok, let's try to understand this bit by bit.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 424)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-    When this option is on, when any command fails (for any of the reasons
-    listed  in Section 2.8.1, Consequences of Shell Errors or by returning
-    an exit status greater than zero), the shell  immediately  shall  exit
-    with the following exceptions:
-
+<pre class="code bash literal-block">
+When this option is on, when any <span class="name builtin">command</span> fails <span class="operator">(</span><span class="keyword">for</span> any of the reasons
+listed  in Section <span class="literal number">2</span>.8.1, Consequences of Shell Errors or by returning
+an <span class="name builtin">exit</span> status greater than zero<span class="operator">)</span>, the shell  immediately  shall  <span class="name builtin">exit</span>
+with the following exceptions:
 </pre>
-</div>
 <p>Translation: &quot;Exit on error, except...&quot;.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 433)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-      1. The  failure of any individual command in a multi-command pipeline
-         shall not cause the shell to exit. Only the failure of  the  pipe-
-         line itself shall be considered.
-
+<pre class="code bash literal-block">
+<span class="literal number">1</span>. The  failure of any individual <span class="name builtin">command</span> in a multi-command pipeline
+   shall not cause the shell to exit. Only the failure of  the  pipe-
+   line itself shall be considered.
 </pre>
-</div>
 <p>&quot;By default, we only care about the exit code of the last command in the pipe&quot;, so <code>false | false | false | true</code> would not be considered an error, since the last command succeeded. This behaviour is made more sane by <code>set -o pipefail</code>.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 441)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-      2. The  −e  setting shall be ignored when executing the compound list
-         following the while, until, if, or elif reserved word
-
+<pre class="code bash literal-block">
+<span class="literal number">2</span>. The  −e  setting shall be ignored when executing the compound list
+   following the <span class="keyword">while</span>, <span class="keyword">until</span>, <span class="keyword">if</span>, or <span class="keyword">elif</span> reserved word
 </pre>
-</div>
 <p>Ok, makes sense: the if-case expects either success or error, so <code>set -e</code> has to be ignored for it to work.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 448)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-                 a pipeline beginning with the ! reserved word
-
+<pre class="code bash literal-block">
+a pipeline beginning with the ! reserved word
 </pre>
-</div>
 <p>Hmm, I guess that if we have the NOT operator before a failing command, the line should be considered successful. Then logic would dictate:</p>
 <pre class="code bash literal-block">
 <span class="name builtin">true</span>     <span class="comment single"># don't exit?
@@ -559,16 +524,9 @@ The solution, again, is to first create the message and assign it to a variable,
 </pre>
 <p>So the exit code is negated, but <code>set -e</code> is disabled, logic be damned.</p>
 <p>And saving the best for last:</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 477)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-                 or any command of an AND-OR list other than the last.
-
+<pre class="code bash literal-block">
+or any <span class="name builtin">command</span> of an AND-OR list other than the last.
 </pre>
-</div>
 <p>This is where things start to get really weird.</p>
 <p>Let's say that we start with a piece of code that works:</p>
 <pre class="code bash literal-block">
@@ -582,51 +540,30 @@ scp remoteserver:/releases/latest . <span class="operator">&amp;&amp;</span> <sp
 <span class="name builtin">echo</span> <span class="literal string single">'Deploying release'</span>
 </pre>
 <p>But the seemingly harmless addition completely breaks the protection, because <code>scp</code> became a &quot;command of an AND-OR list other than the last&quot;.</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 500)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-        Timeout, server 1.2.3.4 not responding.
-        lost connection
-        Deploying release
-
+<pre class="code bash literal-block">
+Timeout, server <span class="literal number">1</span>.2.3.4 not responding.
+lost connection
+Deploying release
 </pre>
-</div>
 <p>Furthermore, if we learned anything from the NOT-operator it would be that we have to read the text carefully: What is the meaning of &quot;last&quot; is this context? Could it mean the last command executed, as in &quot;Run commands according to the rules of the conditionals and if the last executed command failed, terminate the process.&quot;?</p>
 <p>Of course not, that would be way to easy. It <em>clearly</em> means the last command <strong>as written on the line</strong>. Which gives us another subtle behavior:</p>
 <pre class="code bash literal-block">
 <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 1'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">&amp;&amp;</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'true 1'</span><span class="punctuation">;</span> true<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">||</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 2'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span>
 <span class="name builtin">echo</span> <span class="literal string double">&quot;Survived&quot;</span>
 </pre>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 515)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-        false 1
-        false 2
-
+<pre class="code bash literal-block">
+<span class="name builtin">false</span> <span class="literal number">1</span>
+<span class="name builtin">false</span> <span class="literal number">2</span>
 </pre>
-</div>
 <pre class="code bash literal-block">
 <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 1'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">||</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 2'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">&amp;&amp;</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'true 1'</span><span class="punctuation">;</span> true<span class="punctuation">;</span> <span class="operator">}</span>
 <span class="name builtin">echo</span> <span class="literal string double">&quot;Survived&quot;</span>
 </pre>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 525)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-        false 1
-        false 2
-        Survived
-
+<pre class="code bash literal-block">
+<span class="name builtin">false</span> <span class="literal number">1</span>
+<span class="name builtin">false</span> <span class="literal number">2</span>
+Survived
 </pre>
-</div>
 <p>The exact same commands are executed, but the behavior of <code>set -e</code> is different.</p>
 <p>Ok, this is clearly complex enough that we can't allow just anyone to mess with the production code. Let's collect all critical code into a function, and forbid anyone with less than 30 years of experience with Bash to modify it. Then all you need to do is call the function and nothing can go wrong, right?</p>
 <pre class="code bash literal-block">
@@ -640,20 +577,12 @@ supercritical<span class="operator">()</span> <span class="operator">{</span>
 supercritical <span class="operator">&amp;&amp;</span> <span class="name builtin">echo</span> <span class="literal string double">&quot;The critical function executed without errors!&quot;</span>
 </pre>
 <p>If you've read this far, you probably know what to expect:</p>
-<div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 551)</p>
-<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
-<pre class="literal-block">
-.. code-block:: none
-
-        Timeout, server 1.2.3.4 not responding.
-        lost connection
-        Deploying release
-        The critical function executed without errors!
-
-
+<pre class="code bash literal-block">
+Timeout, server <span class="literal number">1</span>.2.3.4 not responding.
+lost connection
+Deploying release
+The critical <span class="keyword">function</span> executed without errors!
 </pre>
-</div>
 <p>That's right, <strong>by using conditionals AROUND the function, you change the behavior WITHIN the function!</strong></p>
 <p>I honestly don't know if this is according to rule 2 or 3 above, but I don't care anymore. I just know enough to walk away and never look back.</p>
 </div>

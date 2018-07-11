@@ -401,7 +401,7 @@ Before we can go any further, we have to really understand what :code:`set -e` d
 
 From :code:`man set` and also the `POSIX specification <http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_25>`_: 
 
-.. code-block:: none
+.. code-block:: bash
 
     When this option is on, when any command fails (for any of the reasons
     listed  in Section 2.8.1, Consequences of Shell Errors or by returning
@@ -427,7 +427,7 @@ From :code:`man set` and also the `POSIX specification <http://pubs.opengroup.or
 Ok, let's try to understand this bit by bit. 
 
 
-.. code-block:: none
+.. code-block:: bash
 
     When this option is on, when any command fails (for any of the reasons
     listed  in Section 2.8.1, Consequences of Shell Errors or by returning
@@ -436,7 +436,7 @@ Ok, let's try to understand this bit by bit.
 
 Translation: "Exit on error, except...". 
 
-.. code-block:: none
+.. code-block:: bash
 
       1. The  failure of any individual command in a multi-command pipeline
          shall not cause the shell to exit. Only the failure of  the  pipe-
@@ -444,14 +444,14 @@ Translation: "Exit on error, except...".
 
 "By default, we only care about the exit code of the last command in the pipe", so :code:`false | false | false | true` would not be considered an error, since the last command succeeded. This behaviour is made more sane by :code:`set -o pipefail`. 
 
-.. code-block:: none
+.. code-block:: bash
 
       2. The  −e  setting shall be ignored when executing the compound list
          following the while, until, if, or elif reserved word
 		 
 Ok, makes sense: the if-case expects either success or error, so :code:`set -e` has to be ignored for it to work. 
 
-.. code-block:: none
+.. code-block:: bash
 
 		 a pipeline beginning with the ! reserved word
 		 
@@ -480,7 +480,7 @@ So the exit code is negated, but :code:`set -e` is disabled, logic be damned.
 
 And saving the best for last: 
 
-.. code-block:: none
+.. code-block:: bash
 
 		 or any command of an AND-OR list other than the last.
 
@@ -503,7 +503,7 @@ Sometime later, you realize that you need more detailed logging:
 
 But the seemingly harmless addition completely breaks the protection, because :code:`scp` became a "command of an AND-OR list other than the last". 
 
-.. code-block:: none
+.. code-block:: bash
 
 	Timeout, server 1.2.3.4 not responding.
 	lost connection
@@ -518,7 +518,7 @@ Of course not, that would be way to easy. It *clearly* means the last command **
 	{ echo 'false 1'; false; } && { echo 'true 1'; true; } || { echo 'false 2'; false; } 
 	echo "Survived"
 
-.. code-block:: none
+.. code-block:: bash
 
 	false 1
 	false 2
@@ -528,7 +528,7 @@ Of course not, that would be way to easy. It *clearly* means the last command **
 	{ echo 'false 1'; false; } || { echo 'false 2'; false; } && { echo 'true 1'; true; }
 	echo "Survived"
 
-.. code-block:: none
+.. code-block:: bash
 
 	false 1
 	false 2
@@ -554,7 +554,7 @@ Ok, this is clearly complex enough that we can't allow just anyone to mess with 
 
 If you've read this far, you probably know what to expect: 
 
-.. code-block:: none
+.. code-block:: bash
 
 	Timeout, server 1.2.3.4 not responding.
 	lost connection
