@@ -12,6 +12,7 @@ test:
 
 pages:
   script:
+  - apt-get install -y rst2html
   - hugo
   artifacts:
     paths:
