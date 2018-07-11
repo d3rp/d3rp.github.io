@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+
+<meta name="description" content="Exit, Bash! I wish I would have been told at the beginning of my journey: &quot;Yes, Bash has some quirky behavior and yes, you can work around them. But unless what you are doing is either trivial or insignificant, you should really look for a better tool.&quot; And by trivial, as we will see, I mean not using conditionals, subshells, pipes or functions.
+I&#39;m not considering Bash appropriate for writing any important application (you&#39;d have to be insane to want to do that).">
+
+<meta property="og:title" content="Exit Bash" />
+<meta property="og:description" content="Exit, Bash! I wish I would have been told at the beginning of my journey: &quot;Yes, Bash has some quirky behavior and yes, you can work around them. But unless what you are doing is either trivial or insignificant, you should really look for a better tool.&quot; And by trivial, as we will see, I mean not using conditionals, subshells, pipes or functions.
+I&#39;m not considering Bash appropriate for writing any important application (you&#39;d have to be insane to want to do that)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://5min.ninja/blog/exit-bash/" />
+
+
+
+<meta property="article:published_time" content="2018-05-15T17:58:22&#43;03:00"/>
+
+<meta property="article:modified_time" content="2018-05-15T17:58:22&#43;03:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Exit Bash 
+
+</title>
+<link rel="canonical" href="http://5min.ninja/blog/exit-bash/">
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/joni_hiihtaa.jpg" srcset="http://5min.ninja/img/joni_hiihtaa.jpg 1x"></a>
+            
+            <a href="/"><div class="name"></div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="http://5min.ninja/blog/"><span>Blog</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/rojun" target="_blank" rel="noopener"><img class="icon" src="/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/rojun_itu" target="_blank" rel="noopener"><img class="icon" src="/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Exit Bash
+
+</div>
+
+                    <div class="initials"><a href="http://5min.ninja/"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Tue May 15 2018 17:58:22 EEST'>May 15, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>16 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <div class="document" id="exit-bash">
+<h1 class="title">Exit, Bash!</h1>
+
+<p>I wish I would have been told at the beginning of my journey:
+&quot;Yes, Bash has some quirky behavior and yes, you can work around them.
+<strong>But unless what you are doing is either trivial or insignificant, you should really look for a better tool.</strong>&quot;
+And by trivial, as we will see, I mean not using conditionals, subshells, pipes or functions.</p>
+<p>I'm not considering Bash appropriate for writing any important application (you'd have to be insane to want to do that). But I am evaluating it as something it is commonly used for: Writing scripts to <strong>surround and support</strong> important applications, such as building release artifacts, running test automation and performing deployments.  Therefore, in this blog post I will focus on a single essential feature: <strong>Exit when something goes wrong</strong>. I don't care what Bash decides to do: sigkill itself, kernel panic, or set the computer on fire. Anything is better than continuing despite errors.</p>
+<p>I feel like I've been in an abusive relationship during the last 10 years. Most of the time, everything was fine, but if I'd fail to follow some subtle, seemingly arbitrary rule, I'd get slapped in the face. But I kept going, learning more and more obscure rules because I thought it was worth it. I thought that once I learned a little bit more, everything would be great.  I thought the problem was with me, that I just needed to get better. But no more.
+If you are in a bad relationship with someone, it's not your responsibility to tip-toe around them to avoid getting beaten. It is your responsibility to get out.</p>
+<p>This is my story of learning Bash over the last 10 something years. I've always seen proficiency in shell scripting as a virtue and requirement for working in UNIX environments. This is partly true: Interactive shell scripting is one of the best computer interfaces available, and I don't see this changing anytime soon.
+But the fact that it is well known, ubiquitous and convenient will tempt you into using it for automation of critical tasks.</p>
+<p>This is not intended as a rant about programming languages, even though it might seem like one. Nor is it a guide on how to use Bash more safely.
+Instead this is a reminder for my future self that Bash is probably not the right tool for the job. Actually, I have told myself this many times already, but keep falling into the same traps because it is too convenient. Hopefully putting this in writing will have stronger impact.</p>
+<div class="section" id="bash-strict-mode-set-euo-pipefail">
+<h2>Bash &quot;strict mode&quot; <code>set -euo pipefail</code></h2>
+<p>Let's say we have been using Bash for a couple of years and have started getting comfortable with its peculiarities. In particular, with regards to exiting on error, we have learned three important lessons:</p>
+<p><a class="reference external" href="http://mywiki.wooledge.org/BashPitfalls#cd_.2Ffoo.3B_bar">Always use 'set -e'</a></p>
+<pre class="code bash literal-block">
+<span class="name builtin">cd</span> folder<span class="punctuation">;</span> rm -r * <span class="comment single"># This will make you sad</span>
+</pre>
+<p><a class="reference external" href="https://github.com/valvesoftware/steam-for-linux/issues/3671">Always use 'set -u'</a></p>
+<pre class="code bash literal-block">
+rm -rf <span class="literal string double">&quot;</span><span class="name variable">$STEAMROOT</span><span class="literal string double">/&quot;</span>* <span class="comment single"># This will make you _really_ sad</span>
+</pre>
+<p><a class="reference external" href="http://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html#The-Set-Builtin">Always use 'set -o pipefail'</a></p>
+<pre class="code bash literal-block">
+<span class="comment single"># This is not going to give you a very secure password if
+# the file doesn't exist
+</span><span class="name variable">password</span><span class="operator">=</span><span class="keyword">$(</span>cat ./file_with_random_content <span class="punctuation">|</span> sha512sum<span class="keyword">)</span>
+</pre>
+<p><strong>From here on, assume that every single code sample is preceeded by</strong> <code>set -euo pipefail</code>.  Let's write some production code.</p>
+</div>
+<div class="section" id="tests-in-bash">
+<h2>Tests in Bash</h2>
+<p><strong>First quiz: What does this code do?</strong></p>
+<pre class="code bash literal-block">
+<span class="keyword">if</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -lt <span class="literal number">100</span><span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;The release is broken, abort.&quot;</span>
+<span class="keyword">else</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;Pushing to production, because </span><span class="literal string interpol">${</span><span class="name variable">passed</span><span class="literal string interpol">}</span><span class="literal string double">% of the tests passed&quot;</span>
+<span class="keyword">fi</span>
+</pre>
+<p>Syntax errors are easy mistakes to make, but it shouldn't be dangerous, since we used <code>set -e</code>, right? Apparently not:</p>
+<pre class="code bash literal-block">
+./bash.sh: line <span class="literal number">8</span>: <span class="operator">[</span>: missing <span class="literal string backtick">`</span><span class="operator">]</span><span class="error">'</span>
+Pushing to production, because <span class="literal number">7</span>% of the tests passed
+</pre>
+<p>What happened here? We mistakenly thought that that <code>set -e</code> would make sure that the script would exit on error.
+But if the error happens within an <code>if</code>-case, this check is disabled, since <code>if</code> needs to interpret different status codes to function.</p>
+<p>&quot;But that's user error&quot; you say. True, but it's still extremely dangerous. No amount of experience will prevent you from some day making this mistake.
+As long as code is written by humans, programming languages should protect against simple mistakes like this.</p>
+<p><strong>Second quiz: What's the difference between these two code blocks? Is one safer than the other if we get an unknown value of &quot;$passed&quot;?</strong></p>
+<pre class="code bash literal-block">
+<span class="keyword">if</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -ge <span class="literal number">100</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+        <span class="name builtin">echo</span> <span class="literal string double">&quot;Pushing to production, because </span><span class="literal string interpol">${</span><span class="name variable">passed</span><span class="literal string interpol">}</span><span class="literal string double">% of the tests passed&quot;</span>
+<span class="keyword">else</span>
+        <span class="name builtin">echo</span> <span class="literal string double">&quot;The release is broken, abort.&quot;</span>
+<span class="keyword">fi</span>
+</pre>
+<pre class="code bash literal-block">
+<span class="keyword">if</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -lt <span class="literal number">100</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+        <span class="name builtin">echo</span> <span class="literal string double">&quot;The release is broken, abort.&quot;</span>
+<span class="keyword">else</span>
+        <span class="name builtin">echo</span> <span class="literal string double">&quot;Pushing to production, because </span><span class="literal string interpol">${</span><span class="name variable">passed</span><span class="literal string interpol">}</span><span class="literal string double">% of the tests passed&quot;</span>
+<span class="keyword">fi</span>
+</pre>
+<p>Logically they seem to be identical. But what happens if <code>$passed</code> is not a number? Or if it's an empty string?</p>
+<p>The latter block is problematic (let's pretend that the input comes from a well-written Node.js application):</p>
+<pre class="code bash literal-block">
+./bash.sh: line <span class="literal number">8</span>: <span class="operator">[</span>: undefined: integer expression expected
+Pushing to production, because undefined% of the tests passed
+</pre>
+<p>The way the <code>if</code>-case is designed is to execute a command (in this case <code>/usr/bin/[</code>) and if the status code is <code>0</code> it executes the <code>if</code> block, otherwise it executes the <code>else</code> block. This makes sense in some contexts. For example:</p>
+<pre class="code bash literal-block">
+<span class="keyword">if</span> <span class="operator">[</span> -z <span class="literal string double">&quot;</span><span class="name variable">$string</span><span class="literal string double">&quot;</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+  <span class="comment single"># The string is empty
+</span><span class="keyword">else</span>
+  <span class="comment single"># It's not
+</span><span class="keyword">fi</span>
+</pre>
+<p>The problem occurs when more than two exit codes are possible, and it is important to distinguish between different positive codes. <code>/usr/bin/[</code> <strong>actually has three possible status codes: 0 for positive test, 1 for negative test and 2 for failure.</strong> The issue is that <code>if</code> treats <code>1</code> and <code>2</code> the same.</p>
+<p>What can we do to avoid this problem?</p>
+<pre class="code bash literal-block">
+<span class="comment single"># Regex to the rescue!
+</span><span class="name variable">re</span><span class="operator">=</span><span class="literal string single">'^[0-9]+$'</span>
+<span class="keyword">if</span> ! <span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$a</span><span class="literal string double">&quot;</span> <span class="operator">=</span>~ <span class="name variable">$re</span> <span class="operator">]]</span> <span class="punctuation">;</span> <span class="keyword">then</span>
+   <span class="name builtin">echo</span> not number
+   <span class="name builtin">exit</span> <span class="literal number">1</span>
+<span class="keyword">fi</span>
+<span class="keyword">if</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$a</span><span class="literal string double">&quot;</span> -lt <span class="literal number">5</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+        ...
+<span class="keyword">fi</span>
+</pre>
+<pre class="code bash literal-block">
+<span class="comment single"># If it's not equal to itself, it's not a number
+</span><span class="keyword">if</span> ! <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$a</span><span class="literal string double">&quot;</span> -eq <span class="literal string double">&quot;</span><span class="name variable">$a</span><span class="literal string double">&quot;</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+  <span class="name builtin">echo</span> <span class="literal string single">'not a number'</span>
+  <span class="name builtin">exit</span> <span class="literal number">1</span>
+<span class="keyword">fi</span>
+<span class="keyword">if</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$a</span><span class="literal string double">&quot;</span> -lt <span class="literal number">5</span> <span class="operator">]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+  ...
+<span class="keyword">fi</span>
+</pre>
+<p>My favorite solution is hot-patching <code>[</code>. In addition to completely breaking syntax highlighting, it allows you to use your original code safely without modifications. Maybe.</p>
+<pre class="code bash literal-block">
+<span class="keyword">function</span> <span class="operator">[</span> <span class="operator">()</span> <span class="operator">{</span>
+  <span class="comment single"># Patched test operator. I have no idea if this is reliable,
+</span>  <span class="comment single"># it will probably fail spectacularly on some corner-case.
+</span>  <span class="name builtin">builtin</span> <span class="operator">[</span> <span class="literal string double">&quot;</span><span class="name variable">$&#64;</span><span class="literal string double">&quot;</span> <span class="comment single"># Do the actual test. Use 'builtin' to avoid a recursive loop.
+</span>  <span class="name variable">statuscode</span><span class="operator">=</span><span class="name variable">$?</span>
+  <span class="keyword">case</span> <span class="name variable">$statuscode</span> in
+    <span class="literal number">0</span><span class="operator">)</span>
+      <span class="name builtin">echo</span> <span class="literal string double">&quot;Status code: </span><span class="name variable">$statuscode</span><span class="literal string double"> The test is positive&quot;</span>
+      <span class="keyword">return</span> <span class="name variable">$statuscode</span>
+    <span class="punctuation">;;</span>
+    <span class="literal number">1</span><span class="operator">)</span>
+      <span class="name builtin">echo</span> <span class="literal string double">&quot;Status code: </span><span class="name variable">$statuscode</span><span class="literal string double"> The test is negative&quot;</span>
+      <span class="keyword">return</span> <span class="name variable">$statuscode</span>
+    <span class="punctuation">;;</span>
+    <span class="literal number">2</span><span class="operator">)</span>
+      <span class="name builtin">echo</span> <span class="literal string double">&quot;Status code: </span><span class="name variable">$statuscode</span><span class="literal string double"> The test failed with an error, exiting&quot;</span>
+      <span class="name builtin">exit</span> <span class="literal number">1</span>
+    <span class="punctuation">;;</span>
+    *<span class="operator">)</span>
+      <span class="name builtin">echo</span> <span class="literal string single">'This should never happen??'</span>
+      <span class="name builtin">exit</span> <span class="literal number">1</span>
+    <span class="punctuation">;;</span>
+  <span class="keyword">esac</span>
+<span class="operator">}</span>
+</pre>
+<p>I think it's fair to say that none of the solutions above are acceptable.</p>
+<!-- Is that acceptable? -->
+<div class="section" id="double-brackets">
+<h3>Double brackets</h3>
+<p>But hang on! Bash also supports the non-POSIX double-brackets for tests. Surely those have to be better?</p>
+<pre class="code bash literal-block">
+<span class="keyword">if</span> <span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -lt <span class="literal number">100</span> <span class="operator">]]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;The release is broken, abort.&quot;</span>
+<span class="keyword">else</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;Pushing to production, because </span><span class="literal string interpol">${</span><span class="name variable">passed</span><span class="literal string interpol">}</span><span class="literal string double">% of the tests passed&quot;</span>
+<span class="keyword">fi</span>
+</pre>
+<ul class="simple">
+<li>Regular numbers work as expected.</li>
+<li>Setting <code>passed</code> to an empty string converts it to a zero. That's not good, but not horrendous either.</li>
+<li>Setting <code>passed</code> to non-alphanumeric characters causes an error that is ignored:</li>
+</ul>
+<pre class="code bash literal-block">
+./double_bracket_lt.sh: line <span class="literal number">6</span>: <span class="operator">[[</span>: <span class="punctuation">&amp;</span>/?: syntax error: operand expected <span class="operator">(</span>error token is <span class="literal string double">&quot;&amp;/?&quot;</span><span class="operator">)</span>
+Pushing to production, because <span class="punctuation">&amp;</span>/?% of the tests passed
+</pre>
+<ul class="simple">
+<li>Setting <code>passed</code> to a number followed by non-digits also continues on error:</li>
+</ul>
+<pre class="code bash literal-block">
+./doublestuff.sh: line <span class="literal number">28</span>: <span class="operator">[[</span>: 5p: value too great <span class="keyword">for</span> base <span class="operator">(</span>error token is <span class="literal string double">&quot;5p&quot;</span><span class="operator">)</span>
+Pushing to production, because 5p% of the tests passed
+</pre>
+<ul class="simple">
+<li>Setting <code>passed</code> to an alphabetic string:</li>
+</ul>
+<pre class="code bash literal-block">
+./double_bracket_lt.sh: line <span class="literal number">6</span>: foobar: unbound variable
+</pre>
+<p>Finally, the script actually stopped when encountering an error! But look at <strong>why</strong> it stopped: The variable foobar is undefined. It turns out that when <code>[[</code> does a numerical comparison, it evaluates strings as variable names.
+Somewhat weird, but I guess it allows you to write <code>[[ &quot;var&quot; -lt 5 ]]</code> instead of <code>[[ &quot;$var&quot; -lt 5 ]]</code>, which is extremely useful if you hate dollarsigns and love programming languages that try to guess what you mean.</p>
+<p>But having a language interpret the value of a variable as code should make every programmer feel uneasy. Let's see how far we can push this.</p>
+<pre class="code bash literal-block">
+<span class="name variable">passed</span><span class="operator">=</span><span class="literal string single">'oh'</span>
+<span class="name variable">oh</span><span class="operator">=</span><span class="literal string single">'god'</span>
+<span class="name variable">god</span><span class="operator">=</span><span class="literal string single">'please'</span>
+<span class="name variable">please</span><span class="operator">=</span><span class="literal string single">'no'</span>
+<span class="name variable">no</span><span class="operator">=</span><span class="literal string single">'why'</span>
+<span class="name variable">why</span><span class="operator">=</span><span class="literal string single">'is'</span>
+<span class="name variable">is</span><span class="operator">=</span><span class="literal string single">'this'</span>
+<span class="name variable">this</span><span class="operator">=</span><span class="literal string single">'a'</span>
+<span class="name variable">a</span><span class="operator">=</span><span class="literal string single">'feature'</span>
+<span class="name variable">feature</span><span class="operator">=</span><span class="literal string single">'seriously'</span>
+<span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -lt <span class="literal number">100</span> <span class="operator">]]</span>
+</pre>
+<pre class="code bash literal-block">
+./doublevars.sh: line <span class="literal number">26</span>: seriously: unbound variable
+</pre>
+<p>Let's create a loop:</p>
+<pre class="code bash literal-block">
+<span class="name variable">passed</span><span class="operator">=</span><span class="literal string single">'passed'</span>
+<span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$passed</span><span class="literal string double">&quot;</span> -lt <span class="literal number">100</span> <span class="operator">]]</span>
+</pre>
+<pre class="code bash literal-block">
+./doubleloop.sh: line <span class="literal number">8</span>: <span class="operator">[[</span>: passed: expression recursion level exceeded <span class="operator">(</span>error token is <span class="literal string double">&quot;passed&quot;</span><span class="operator">)</span>
+</pre>
+<p>How about a banking application, just for fun:</p>
+<pre class="code bash literal-block">
+<span class="name builtin">set</span> -euo pipefail
+
+<span class="name variable">bank_account_balance</span><span class="operator">=</span><span class="literal number">100</span>
+<span class="name variable">withraw</span><span class="operator">=</span><span class="literal string double">&quot;</span><span class="name variable">$1</span><span class="literal string double">&quot;</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;current balance: </span><span class="name variable">$bank_account_balance</span><span class="literal string double">&quot;</span>
+
+<span class="keyword">if</span> <span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$withraw</span><span class="literal string double">&quot;</span> -lt <span class="literal string double">&quot;</span><span class="name variable">$bank_account_balance</span><span class="literal string double">&quot;</span> <span class="operator">]]</span> <span class="operator">&amp;&amp;</span> <span class="operator">[[</span> <span class="literal string double">&quot;</span><span class="name variable">$withraw</span><span class="literal string double">&quot;</span> -gt <span class="literal number">0</span> <span class="operator">]]</span><span class="punctuation">;</span> <span class="keyword">then</span>
+        <span class="name builtin">echo</span> allowed
+        <span class="operator">((</span>bank_account_balance -<span class="operator">=</span> withraw<span class="operator">))</span> <span class="operator">||</span> <span class="name builtin">true</span>
+<span class="keyword">else</span>
+        <span class="name builtin">echo</span> not allowed
+<span class="keyword">fi</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;new balance: </span><span class="name variable">$bank_account_balance</span><span class="literal string double">&quot;</span>
+</pre>
+<pre class="code bash literal-block">
+./bank.sh <span class="literal string single">'((bank_account_balance=99999))'</span>
+current balance: <span class="literal number">100</span>
+not allowed
+new balance: <span class="literal number">99999</span>
+</pre>
+<p>Regardless of which test operator you use, <strong>I guess the lesson is that you always have to validate your input... before you validate your input?</strong></p>
+</div>
+<div class="section" id="command-substitution">
+<h3>Command Substitution</h3>
+<p>To use output from commands in other commands, we use command substitution <code>$()</code>.</p>
+<p><strong>Third quiz:</strong> Let's say we want to encrypt some secret using a random password. Which one of these is safer if <code>generate_password</code> fails for any reason?</p>
+<pre class="code bash literal-block">
+<span class="name variable">pw</span><span class="operator">=</span><span class="literal string double">&quot;</span><span class="keyword">$(</span>generate_password<span class="keyword">)</span><span class="literal string double">&quot;</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;secret&quot;</span> <span class="punctuation">|</span> encrypt --passphrase <span class="literal string double">&quot;</span><span class="name variable">$pw</span><span class="literal string double">&quot;</span> <span class="literal string escape">\
+</span>  <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+</pre>
+<pre class="code bash literal-block">
+<span class="name builtin">echo</span> <span class="literal string double">&quot;secret&quot;</span> <span class="punctuation">|</span> encrypt --passphrase <span class="literal string double">&quot;</span><span class="keyword">$(</span>generate_password<span class="keyword">)</span><span class="literal string double">&quot;</span> <span class="literal string escape">\
+</span>  <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+</pre>
+<p>In the latter example, regardless of the return code of the subshell, the parent shell will continue using whatever was printed to stdout (probably not a great password). The first block is safe, since an assignment (without a main command), will have <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_09_01">&quot;with the exit status of the last command substitution performed&quot;</a>. This will be caught by <code>set -e</code>, and the script will exit.</p>
+</div>
+<div class="section" id="local-variables">
+<h3>Local variables</h3>
+<p>It is arguably considered best practice to use functions and local variables to restrict scopes. In our example, we wouldn't want <code>$pw</code> to be available to the whole script, since it might accidentally be misused or overwritten.
+So we take the safe code from the previous example, put it in a function and make the variable local.</p>
+<!-- However, it's not without its dangers. We just learned to -->
+<pre class="code bash literal-block">
+f <span class="operator">()</span> <span class="operator">{</span>
+  <span class="name builtin">local</span> <span class="name variable">pw</span><span class="operator">=</span><span class="literal string double">&quot;</span><span class="keyword">$(</span>generate_password<span class="keyword">)</span><span class="literal string double">&quot;</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;secret&quot;</span> <span class="punctuation">|</span> encrypt --passphrase <span class="literal string double">&quot;</span><span class="name variable">$pw</span><span class="literal string double">&quot;</span> <span class="literal string escape">\
+</span>    <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+<span class="operator">}</span>
+</pre>
+<p>What could possibly be wrong with this?</p>
+<p>Reading <code>man bash</code> reveals the answer:</p>
+<blockquote>
+<dl class="docutils">
+<dt>local [option] [name[=value] ... | - ]</dt>
+<dd><p class="first">...</p>
+<p class="last"><strong>The return status is 0 unless local is used outside a function, an invalid name is supplied, or name  is  a  readonly
+variable.</strong></p>
+</dd>
+</dl>
+</blockquote>
+<p>Even if <code>generate_password</code> fails, Bash will keep going with a bad password.
+So the only safe way to use local variables with command substitution is to define and assign variables on different lines:</p>
+<pre class="code bash literal-block">
+<span class="comment single"># This is actually safe
+</span>f <span class="operator">()</span> <span class="operator">{</span>
+  <span class="name builtin">local</span> pw
+  <span class="name variable">pw</span><span class="operator">=</span><span class="literal string double">&quot;</span><span class="keyword">$(</span>generate_password<span class="keyword">)</span><span class="literal string double">&quot;</span>
+  <span class="name builtin">echo</span> <span class="literal string double">&quot;secret&quot;</span> <span class="punctuation">|</span> encrypt --passphrase <span class="literal string double">&quot;</span><span class="name variable">$pw</span><span class="literal string double">&quot;</span> <span class="literal string escape">\
+</span>    <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+<span class="operator">}</span>
+</pre>
+</div>
+<div class="section" id="pipes">
+<h3>Pipes</h3>
+<p>But hang on, passing an encryption key as a commandline argument is bad practice. Anyone on the same system could run <code>ps</code> and read it. So it would be better to pass it as <code>STDIN</code>.</p>
+<pre class="code bash literal-block">
+generate_password <span class="punctuation">|</span> encrypt /tmp/secret <span class="literal string escape">\
+</span>    <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+</pre>
+<p>And since we are using <code>set -euo pipefail</code>, the script should exit if <code>generate_password</code> fails, right?
+When <code>pipefail</code> is set, the return status of the pipeline will be set to the exit code of the last command with a non-zero status. This will be caught by <code>set -e</code>, and the script will exit.  <a class="reference external" href="https://tiswww.case.edu/php/chet/bash/bashref.html#Compound-Commands">But not until all commands in the pipeline have completed:</a></p>
+<blockquote>
+&quot;The shell waits for all commands in the pipeline to terminate before returning a value.&quot;</blockquote>
+<p>So the script will stop processing after the line, but will happily send the data encrypted with a bad password first.
+The solution, again, is to first create the message and assign it to a variable, which would allow the script to exit on error.</p>
+<pre class="code bash literal-block">
+<span class="comment single"># This is actually safe
+</span><span class="name variable">msg</span><span class="operator">=</span><span class="literal string double">&quot;</span><span class="keyword">$(</span>generate_password <span class="punctuation">|</span> encrypt /tmp/secret<span class="keyword">)</span><span class="literal string double">&quot;</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;</span><span class="name variable">$msg</span><span class="literal string double">&quot;</span> <span class="punctuation">|</span> mail -s <span class="literal string single">'Encrypted Secret'</span> me&#64;example.com
+</pre>
+<p>Unless it's ok to pass bad data through the entire pipe, you have to be very careful.</p>
+</div>
+</div>
+<div class="section" id="the-truth-about-set-e">
+<h2>The truth about set -e</h2>
+<p>Before we can go any further, we have to really understand what <code>set -e</code> does, and more importantly, doesn't do.</p>
+<p>From <code>man set</code> and also the <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_25">POSIX specification</a>:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 398)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+    When this option is on, when any command fails (for any of the reasons
+    listed  in Section 2.8.1, Consequences of Shell Errors or by returning
+    an exit status greater than zero), the shell  immediately  shall  exit
+    with the following exceptions:
+
+      1. The  failure of any individual command in a multi-command pipeline
+         shall not cause the shell to exit. Only the failure of  the  pipe-
+         line itself shall be considered.
+
+      2. The  −e  setting shall be ignored when executing the compound list
+         following the while, until, if, or elif reserved word, a  pipeline
+         beginning  with  the !  reserved word, or any command of an AND-OR
+         list other than the last.
+
+      3. If the exit status of a compound command  other  than  a  subshell
+         command  was  the  result of a failure while −e was being ignored,
+         then −e shall not apply to this command.
+
+      This requirement applies to the shell environment  and  each  subshell
+      environment separately.
+
+</pre>
+</div>
+<p>Ok, let's try to understand this bit by bit.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 424)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+    When this option is on, when any command fails (for any of the reasons
+    listed  in Section 2.8.1, Consequences of Shell Errors or by returning
+    an exit status greater than zero), the shell  immediately  shall  exit
+    with the following exceptions:
+
+</pre>
+</div>
+<p>Translation: &quot;Exit on error, except...&quot;.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 433)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+      1. The  failure of any individual command in a multi-command pipeline
+         shall not cause the shell to exit. Only the failure of  the  pipe-
+         line itself shall be considered.
+
+</pre>
+</div>
+<p>&quot;By default, we only care about the exit code of the last command in the pipe&quot;, so <code>false | false | false | true</code> would not be considered an error, since the last command succeeded. This behaviour is made more sane by <code>set -o pipefail</code>.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 441)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+      2. The  −e  setting shall be ignored when executing the compound list
+         following the while, until, if, or elif reserved word
+
+</pre>
+</div>
+<p>Ok, makes sense: the if-case expects either success or error, so <code>set -e</code> has to be ignored for it to work.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 448)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+                 a pipeline beginning with the ! reserved word
+
+</pre>
+</div>
+<p>Hmm, I guess that if we have the NOT operator before a failing command, the line should be considered successful. Then logic would dictate:</p>
+<pre class="code bash literal-block">
+<span class="name builtin">true</span>     <span class="comment single"># don't exit?
+</span>! <span class="name builtin">false</span>  <span class="comment single"># don't exit?
+</span><span class="name builtin">false</span>    <span class="comment single"># exit?
+</span>! <span class="name builtin">true</span>   <span class="comment single"># exit?</span>
+</pre>
+<p>Nope. Read the text again: If there is a <code>!</code> on the line, <code>set -e</code> <strong>is disabled</strong>, which yields:</p>
+<pre class="code bash literal-block">
+<span class="name builtin">true</span>     <span class="comment single"># status code 0: don't exit
+</span>! <span class="name builtin">false</span>  <span class="comment single"># status code 0: don't exit
+</span><span class="name builtin">false</span>    <span class="comment single"># status code 1: exit
+</span>! <span class="name builtin">true</span>   <span class="comment single"># status code 1: don't exit!</span>
+</pre>
+<p>So the exit code is negated, but <code>set -e</code> is disabled, logic be damned.</p>
+<p>And saving the best for last:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 477)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+                 or any command of an AND-OR list other than the last.
+
+</pre>
+</div>
+<p>This is where things start to get really weird.</p>
+<p>Let's say that we start with a piece of code that works:</p>
+<pre class="code bash literal-block">
+scp remoteserver:/releases/latest .
+<span class="name builtin">echo</span> <span class="literal string single">'Deploying release'</span>
+</pre>
+<p>If the network goes down while transferring, we won't try to deploy half a release, because of <code>set -e</code>.
+Sometime later, you realize that you need more detailed logging:</p>
+<pre class="code bash literal-block">
+scp remoteserver:/releases/latest . <span class="operator">&amp;&amp;</span> <span class="name builtin">echo</span> <span class="literal string single">'Successfully pulled release'</span>
+<span class="name builtin">echo</span> <span class="literal string single">'Deploying release'</span>
+</pre>
+<p>But the seemingly harmless addition completely breaks the protection, because <code>scp</code> became a &quot;command of an AND-OR list other than the last&quot;.</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 500)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+        Timeout, server 1.2.3.4 not responding.
+        lost connection
+        Deploying release
+
+</pre>
+</div>
+<p>Furthermore, if we learned anything from the NOT-operator it would be that we have to read the text carefully: What is the meaning of &quot;last&quot; is this context? Could it mean the last command executed, as in &quot;Run commands according to the rules of the conditionals and if the last executed command failed, terminate the process.&quot;?</p>
+<p>Of course not, that would be way to easy. It <em>clearly</em> means the last command <strong>as written on the line</strong>. Which gives us another subtle behavior:</p>
+<pre class="code bash literal-block">
+<span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 1'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">&amp;&amp;</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'true 1'</span><span class="punctuation">;</span> true<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">||</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 2'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;Survived&quot;</span>
+</pre>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 515)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+        false 1
+        false 2
+
+</pre>
+</div>
+<pre class="code bash literal-block">
+<span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 1'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">||</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'false 2'</span><span class="punctuation">;</span> false<span class="punctuation">;</span> <span class="operator">}</span> <span class="operator">&amp;&amp;</span> <span class="operator">{</span> <span class="name builtin">echo</span> <span class="literal string single">'true 1'</span><span class="punctuation">;</span> true<span class="punctuation">;</span> <span class="operator">}</span>
+<span class="name builtin">echo</span> <span class="literal string double">&quot;Survived&quot;</span>
+</pre>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 525)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+        false 1
+        false 2
+        Survived
+
+</pre>
+</div>
+<p>The exact same commands are executed, but the behavior of <code>set -e</code> is different.</p>
+<p>Ok, this is clearly complex enough that we can't allow just anyone to mess with the production code. Let's collect all critical code into a function, and forbid anyone with less than 30 years of experience with Bash to modify it. Then all you need to do is call the function and nothing can go wrong, right?</p>
+<pre class="code bash literal-block">
+supercritical<span class="operator">()</span> <span class="operator">{</span>
+  <span class="comment single"># DO NOT MODIFY THIS FUNCTION
+</span>  <span class="name builtin">set</span> -euo pipefail
+  scp remoteserver:/releases/latest .
+  <span class="name builtin">echo</span> <span class="literal string single">'Deploying release'</span>
+<span class="operator">}</span>
+
+supercritical <span class="operator">&amp;&amp;</span> <span class="name builtin">echo</span> <span class="literal string double">&quot;The critical function executed without errors!&quot;</span>
+</pre>
+<p>If you've read this far, you probably know what to expect:</p>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">&lt;stdin&gt;</tt>, line 551)</p>
+<p>Cannot analyze code. No Pygments lexer found for &quot;none&quot;.</p>
+<pre class="literal-block">
+.. code-block:: none
+
+        Timeout, server 1.2.3.4 not responding.
+        lost connection
+        Deploying release
+        The critical function executed without errors!
+
+
+</pre>
+</div>
+<p>That's right, <strong>by using conditionals AROUND the function, you change the behavior WITHIN the function!</strong></p>
+<p>I honestly don't know if this is according to rule 2 or 3 above, but I don't care anymore. I just know enough to walk away and never look back.</p>
+</div>
+<div class="section" id="exiting-bash">
+<h2>Exiting Bash</h2>
+<p><strong>The point of this post is not to teach you how to use Bash more safely, it's that you shouldn't have to.</strong></p>
+<p>But let's suppose that you still would like to. You are willing to spend the time necessary to learn all of the subtle behavior and accept the mental overhead to write code while memorizing all rules.
+Still, unless you are working in a vacuum, others will most likely not.
+If you work in a team, you cannot assume that everyone will be as dedicated as you, which means that eventually someone will naively add a conditional AND-statement which could make your production script unreliable.</p>
+<p>This is especially insidious because it relates to error handling. Most of the time, everything seems to be working fine. The problem with the last script might not have revealed itself, because <code>scp</code> has never failed so far, but eventually there will be a network glitch.
+In other languages, I haven't tried throwing every kind of exception in every kind of context and I shouldn't have to. I should be able to operate using a simple mental model that uncaught exceptions will terminate the application.</p>
+<p>I should also mention that I'm aware that these issues are not by design, but due to technical limitations and backwards compatibility. As an end-user of this tool however, it doesn't make any difference. I simply want to use tools I can rely on.</p>
+<p>In the past, I would have said that
+<a class="reference external" href="http://mywiki.wooledge.org/BashFAQ/105">pages</a>
+like
+<a class="reference external" href="http://mywiki.wooledge.org/BashPitfalls">these</a> are required reading for everyone working in a UNIX environment.
+But that would be like recommending reading &quot;<em>Top 10 tips to safely trim your fingernails with a chainsaw</em>&quot;</p>
+</div>
+</div>
+                <br>
+		<p class="back-to-posts"><a href="/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+

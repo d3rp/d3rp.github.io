@@ -1,0 +1,6 @@
+@startuml
+[Insert] as ins
+[Normal] as n
+start -> n
+n -> ins: i
+@enduml

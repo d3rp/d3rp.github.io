@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python Web Dev on 5 min ninja</title>
+    <link>http://5min.ninja/series/python-web-dev/</link>
+    <description>Recent content in Python Web Dev on 5 min ninja</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 04 Feb 2018 22:05:58 +0200</lastBuildDate>
+    
+	<atom:link href="http://5min.ninja/series/python-web-dev/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Python Fun</title>
+      <link>http://5min.ninja/blog/python-fun/</link>
+      <pubDate>Sun, 04 Feb 2018 22:05:58 +0200</pubDate>
+      
+      <guid>http://5min.ninja/blog/python-fun/</guid>
+      <description>Some fun on Python 199200201202203204205206207208209210211212213214215216217218219220221222223224225226227228229230231232233234235236237238239240241242243244245246247248249250251 import io import os from datetime import datetime from multiprocessing import Lock, Process LOG_FILE = &amp;#34;times.log&amp;#34; lock = Lock() def time_this_locked(func): def wrapper(*args, **kwargs): global lock start = datetime.now() res = func(*args, **kwargs) elapsed = datetime.now() - start lock.acquire() try: with open(LOG_FILE, &amp;#34;a&amp;#34;) as out_file:  out_file.write(str(elapsed) + &amp;#34;\n&amp;#34;) finally: lock.release() return res return wrapper def gen(MAX): i = 0 while i&amp;lt;MAX: i+=1 yield i @time_this_locked def iterate(): for _ in gen(10000): for _ in gen(1000): 2 ** 4 def f(x): return x*x def main(): if os.</description>
+    </item>
+    
+  </channel>
+</rss>

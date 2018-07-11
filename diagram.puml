@@ -1,0 +1,13 @@
+@startuml
+[Insert] as ins
+[Normal] as n
+[Command-Line] as cli
+start -> ins
+ins -> n: "ESC/CTRL-C"
+n -> ins: i
+n -> cli: ":"
+cli -> n: "ESC/CTRL-C"
+cli -> quit: "q<Enter>"
+interface "Great\nSuccess" as gs
+cli -> gs: vimtutor<Enter>
+@enduml
