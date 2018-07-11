@@ -14,6 +14,7 @@ pages:
   script:
   #- apt-get install -y rst2html
   #- apk --no-cache add rst2html
+  - apk --no-cache add py-pip
   - pip install docutils
   - hugo
   artifacts:
