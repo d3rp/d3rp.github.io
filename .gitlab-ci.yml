@@ -15,7 +15,8 @@ pages:
   #- apt-get install -y rst2html
   #- apk --no-cache add rst2html
   - apk --no-cache add py-pip
-  - pip install docutils
+  - pip install docutils        # for rst2html
+  - pip install Pygments        # for code view
   - hugo
   artifacts:
     paths:
