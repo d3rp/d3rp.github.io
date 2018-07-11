@@ -12,7 +12,8 @@ test:
 
 pages:
   script:
-  - apt-get install -y rst2html
+  #- apt-get install -y rst2html
+  - apk --no-cache add rst2html
   - hugo
   artifacts:
     paths:
