@@ -1,6 +1,0 @@
-INFO :2018-02-05 14:28:53,073:connectionpool._new_conn() ~ Starting new HTTP connection (1): dictionary.cambridge.org
-INFO :2018-02-05 14:28:53,350:say.scrape_audio() ~ Found 1 sound sample candidates
-INFO :2018-02-05 14:28:53,623:say.play() ~ Playing with cmd: ['mpv', '--really-quiet', '/home/j/src/python/pronounce/say/../mp3s/manipulation.mp3']
-INFO :2018-02-05 14:28:57,990:say.play() ~ Playing with cmd: ['mpv', '--really-quiet', '/home/j/src/python/pronounce/say/../mp3s/manipulation.mp3']
-INFO :2018-02-05 14:29:03,265:say.play() ~ Playing with cmd: ['mpv', '--really-quiet', '/home/j/src/python/pronounce/say/../mp3s/manipulation.mp3']
-INFO :2018-02-05 14:29:07,370:say.play() ~ Playing with cmd: ['mpv', '--really-quiet', '/home/j/src/python/pronounce/say/../mp3s/manipulation.mp3']
