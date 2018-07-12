@@ -41,3 +41,17 @@ Push to repo and the pipelines should trigger automatically
 Also as an idea..
 
 https://sadanand-singh.github.io/posts/nikola2hugo/
+
+## Themes
+
+Themes can be tested locally by cloning to themes/ and setting the name in config.toml. To make the theme deployable, it needs to be included in .gitmodules
+
+Themes checked so far as plausible options:
+
+* base16
+* cocoa
+* kiss
+
+More here: https://themes.gohugo.io/
+
+Usually things to keep in mind is how the code snippets are displayed, does it require lots of extra pages, is disqus available as an option..

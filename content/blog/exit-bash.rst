@@ -2,6 +2,8 @@
 title: "Exit Bash"
 date: 2018-05-15T17:58:22+03:00
 draft: false
+tags: ["Automation", "Bash", "Blogging"]
+categories: ["Bash"]
 ---
 
 Exit, Bash!
