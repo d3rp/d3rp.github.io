@@ -1,10 +1,11 @@
-baseURL         = "https://robot-unicorn.gitlab.io/blog"
+baseURL         = "https://robot-unicorn.gitlab.io/"
 languageCode    = "en-us"
 title           = "5min ninja"
-theme           = "detox"
+theme           = "cocoa"
 contentdir      = "content"
 publishdir      = "public"
-pygmentsUseClasses = true
+#pygmentsUseClasses = true
+pygmentsStyle    = "monokai"
 canonifyurls    = true
 highlight       = true
 

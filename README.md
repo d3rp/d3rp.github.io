@@ -13,6 +13,12 @@ If you have a cloned local version, cd into the directory and try:
 
 TBH I'm still figuring these out.
 
+If the themes still don't kick up and run properly (the actual directories are locally empty) try:
+
+    git submodule add https://github.com/nishanths/cocoa-hugo-theme.git themes/cocoa
+
+(obviously for detox try detox - ``cat .gitmodules``)
+
 ### Files
 
 The most relevant files are config.toml for hugo configuration, ./blog/\* for the actual content and .gitlab-ci.yaml for the gitlab pages deployment. The themes can be tweaked via ./layouts - it's better to leave the themes subfolder alone if deploying, as gitlab will override them by using git submodules. .gitmodules defines those themes to be used.

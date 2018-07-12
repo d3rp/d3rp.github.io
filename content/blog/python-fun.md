@@ -1,5 +1,5 @@
 ---
-title: "Python Fun"
+title: "Python Example"
 date: 2018-02-04T22:05:58+02:00
 draft: true
 tags: ["Development", "Python", "fast", "Blogging"]
@@ -8,7 +8,7 @@ series: ["Python Web Dev"]
 project_url: "https://github.com/rojun/pronounce"
 ---
 
-Some fun on Python
+Rendering Python code
 ------------------
 
 {{< highlight python "linenos=table,hl_lines=8 15-17,linenostart=199" >}}
