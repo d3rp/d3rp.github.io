@@ -3,5 +3,5 @@
     ;url = https://github.com/nishanths/cocoa-hugo-theme.git
 
 [submodule "themes/detox"]
-    path = themes/detox
-    url  = https://github.com/allnightgrocery/hugo-theme-blueberry-detox.git
+	path = themes/detox
+	url = https://github.com/allnightgrocery/hugo-theme-blueberry-detox.git

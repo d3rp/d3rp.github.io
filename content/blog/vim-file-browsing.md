@@ -3,6 +3,7 @@ title: "Netrw is the new nerdtree - Browse through buffers"
 date: 2018-02-06T22:45:48+02:00
 draft: false
 ---
+
 After finding [ctrl-p](https://kien.github.io/ctrlp.vim/) I thought it solved my navigation issues with vim. Additionally, it's convenient to split a pane in tmux from within [ranger](https://ranger.github.io/) and then continue with ctrl-p. George Ornbo showed a better way though: [netrw instead of nerdtree](https://shapeshed.com/vim-netrw/#netrw-the-unloved-directory-browser)
 
 It is better, because if you traverse towards the depths of the root of the filesystem, ctrl-p might hang for what seems like an eternity on my old Thinkpad (am I completing the stereotype?). One could use nerdtree similarily, but I felt it breaks the magic with one more plugin. Apparently netrw is a stock plugin shipping with the default vim and has plenty of tricks up its sleave.
@@ -31,3 +32,5 @@ When opening a file, vim contains its path in its own little path. If so - ``gf`
 Now if several files have been opened thusly, they can be shuffled through back and forth by Ctrl-i and Ctrl-b. Also the command mode accepts ``:b <Tab>`` (notice the space) in which case the open buffers will be shown by name (and enter opens the shown buffer).
 
 Instead of going through buffers one-by-one, they can be enlisted with ``:ls`` which enumerates the list of buffers. To select any of these listed ones: ``:b <number><enter>``.
+
+Also this: [some github](https://gist.github.com/ajh17/a8f5f194079818b99199)
