@@ -1,4 +1,4 @@
-baseURL         = "http://5min.ninja"
+baseURL         = "https://robot-unicorn.gitlab.io/blog"
 languageCode    = "en-us"
 title           = "5min ninja"
 theme           = "detox"
@@ -6,7 +6,7 @@ contentdir      = "content"
 publishdir      = "public"
 pygmentsUseClasses = true
 canonifyurls    = true
-highlight = true
+highlight       = true
 
 [permalinks]
 blog            = "blog/:slug/"

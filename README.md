@@ -2,6 +2,17 @@
 
 ## Development
 
+The repo uses submodules. These should work with:
+
+    git clone --recurse-submodules ...
+
+If you have a cloned local version, cd into the directory and try:
+
+    git submodule init
+    git submodule update --recursive
+
+TBH I'm still figuring these out.
+
 ### Files
 
 The most relevant files are config.toml for hugo configuration, ./blog/\* for the actual content and .gitlab-ci.yaml for the gitlab pages deployment. The themes can be tweaked via ./layouts - it's better to leave the themes subfolder alone if deploying, as gitlab will override them by using git submodules. .gitmodules defines those themes to be used.
