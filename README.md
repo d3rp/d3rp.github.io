@@ -19,6 +19,10 @@ If the themes still don't kick up and run properly (the actual directories are l
 
 (obviously for detox try detox - ``cat .gitmodules``)
 
+### RST vs MD
+
+Both should work as long as rst2html is installed (for rst). This can be found in *python-docutils* on arch.
+
 ### Files
 
 The most relevant files are config.toml for hugo configuration, ./blog/\* for the actual content and .gitlab-ci.yaml for the gitlab pages deployment. The themes can be tweaked via ./layouts - it's better to leave the themes subfolder alone if deploying, as gitlab will override them by using git submodules. .gitmodules defines those themes to be used.
@@ -53,11 +57,9 @@ Final version can be seen via localhost:
 
 ## Deployment
 
-Push to repo and the pipelines should trigger automatically
+Push to repo and the pipelines should trigger automatically. Look for CI/CD->Pipelines in Gitlab and click on the last build (pages img).
 
-Also as an idea..
-
-https://sadanand-singh.github.io/posts/nikola2hugo/
+( Also as an idea: https://sadanand-singh.github.io/posts/nikola2hugo/ )
 
 ## Themes
 
@@ -65,9 +67,11 @@ Themes can be tested locally by cloning to themes/ and setting the name in confi
 
 Themes checked so far as plausible options:
 
+* detox
 * base16
 * cocoa
 * kiss
+* afterdark
 
 More here: https://themes.gohugo.io/
 

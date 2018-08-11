@@ -1,6 +1,7 @@
 ---
 title: "Netrw is the new nerdtree - Browse through buffers"
 date: 2018-02-06T22:45:48+02:00
+author: "Joni Turunen"
 draft: false
 ---
 
