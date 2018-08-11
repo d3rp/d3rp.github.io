@@ -1,10 +1,9 @@
 ---
 title: "Top 10 Tips to Safely Trim Your Fingernails with a Chainsaw"
 date: 2018-08-11T11:43:49+03:00
+author: "Gustav Larsson"
 ---
 
-.. Top 10 Tips to Safely Trim Your Fingernails with a Chainsaw
-.. ###########################################################
 
 Or, Why I think Bash should stay out of production environments
 ===============================================================
@@ -378,7 +377,9 @@ But hang on, passing an encryption key as a commandline argument is bad practice
 And since we are using :code:`set -euo pipefail`, the script should exit if :code:`generate_password` fails, right? 
 When :code:`pipefail` is set, the return status of the pipeline will be set to the exit code of the last command with a non-zero status. This will be caught by :code:`set -e`, and the script will exit.  `But not until all commands in the pipeline have completed: <https://tiswww.case.edu/php/chet/bash/bashref.html#Compound-Commands>`_
 
+{{< highlight txt >}}
     "The shell waits for all commands in the pipeline to terminate before returning a value."
+{{< /highlight >}}
 
 So the script will stop processing after the line, but will happily send the data encrypted with a bad password first. 
 The solution, again, is to first create the message and assign it to a variable, which would allow the script to exit on error. 
