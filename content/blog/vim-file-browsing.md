@@ -3,6 +3,7 @@ title: "Netrw is the new nerdtree - Browse through buffers"
 date: 2018-02-06T22:45:48+02:00
 author: "Joni Turunen"
 draft: false
+series: ["On a Vim"]
 ---
 
 After finding [ctrl-p](https://kien.github.io/ctrlp.vim/) I thought it solved my navigation issues with vim. Additionally, it's convenient to split a pane in tmux from within [ranger](https://ranger.github.io/) and then continue with ctrl-p. George Ornbo showed a better way though: [netrw instead of nerdtree](https://shapeshed.com/vim-netrw/#netrw-the-unloved-directory-browser)
