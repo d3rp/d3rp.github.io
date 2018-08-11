@@ -1,4 +1,4 @@
-baseURL         = "https://robot-unicorn.gitlab.io"
+baseURL         = "http://www.5min.ninja"
 languageCode    = "en-us"
 title           = "5min ninja"
 theme           = "cocoa"
