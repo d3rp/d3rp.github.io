@@ -6,8 +6,16 @@ variables:
 
 test:
   script:
+  #- apt-get install -y rst2html
+  #- apk --no-cache add rst2html
+  #- pip install Pygments        # for code view, should be replaced with chroma
+  - apk --no-cache add py-pip
+  - pip install docutils        # for rst2html
   - hugo
-  except:
+  artifacts:
+    paths:
+    - public
+  only:
   - master
 
 pages:
@@ -17,7 +25,7 @@ pages:
   - apk --no-cache add py-pip
   - pip install docutils        # for rst2html
   - pip install Pygments        # for code view
-  - hugo
+  - hugo -v
   artifacts:
     paths:
     - public
