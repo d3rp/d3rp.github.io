@@ -1093,3 +1093,6 @@ p-post-title {
 	color: #428bca;
 	text-decoration: underline;
 }
+#site-header {
+	margin-bottom: 0;
+}
