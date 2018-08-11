@@ -1,4 +1,4 @@
-baseURL         = "http://www.5min.ninja"
+baseURL         = "http://www.5min.ninja/"
 languageCode    = "en-us"
 title           = "5min ninja"
 theme           = ["igoyak", "detox"]
