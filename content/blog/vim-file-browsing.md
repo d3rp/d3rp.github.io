@@ -2,20 +2,21 @@
 title: "Netrw is the new nerdtree - Browse through buffers"
 date: 2018-02-06T22:45:48+02:00
 author: "Joni Turunen"
-draft: false
 series: ["On a Vim"]
 ---
 
-After finding [ctrl-p](https://kien.github.io/ctrlp.vim/) I thought it solved my navigation issues with vim. Additionally, it's convenient to split a pane in tmux from within [ranger](https://ranger.github.io/) and then continue with ctrl-p. George Ornbo showed a better way though: [netrw instead of nerdtree](https://shapeshed.com/vim-netrw/#netrw-the-unloved-directory-browser)
+After finding the [ctrl-p](https://kien.github.io/ctrlp.vim/) plugin I thought it solved my file navigation issues with vim. It felt as convenient as could be to [split a pane in tmux from within ranger]({{< ref "ranger-tmux.md" >}})  and then continue with ctrl-p. George Ornbo showed a better way though: [netrw instead of nerdtree](https://shapeshed.com/vim-netrw/#netrw-the-unloved-directory-browser). ( See [ranger](https://ranger.github.io/) if you like textual terminal based interfaces
+for file navigation with vim bindings.) It is better, because if you traverse towards the depths of the root of the filesystem, ctrl-p might hang for what seems like an eternity on my old Thinkpad (am I completing the stereotype with the terminals and Thinkpads?). One could use nerdtree similarily, but I felt it breaks the magic with one more plugin. **Netrw is a stock plugin shipping with the default vim** and has plenty of tricks up its sleave.
 
-It is better, because if you traverse towards the depths of the root of the filesystem, ctrl-p might hang for what seems like an eternity on my old Thinkpad (am I completing the stereotype?). One could use nerdtree similarily, but I felt it breaks the magic with one more plugin. Apparently netrw is a stock plugin shipping with the default vim and has plenty of tricks up its sleave.
+## Accessing Remote Files
 
 You might have several ssh keys for different services/servers. Define the host in **~/.ssh/config**:
-{{< highlight bash >}}
+{{< highlight sh >}}
 Host my_remote_server # a symbolic name of your choice
   Hostname server_IP_or_DNS # the real name
   User username # the username you use for login
   IdentityFile ~/.ssh/a_suitable_ssh_key_if_any # for authentication purpose…
+
 {{< / highlight >}}
 
 After which netrw handles navigation when we use vim over ssh:
@@ -29,10 +30,19 @@ Furthermore a more complete version of the command is:
 vim scp://username@server_IP_or_DNS[:port]//full_path/to/file.cpp
 {{< / highlight >}}
 
-When opening a file, vim contains its path in its own little path. If so - ``gf`` opens a file that has been written under the cursor. So if one navigates on top of 'main.py' and the directory has such a file, ``girlfriend`` - sorry - ``gf`` opens that file.
+At this point you might ask, what is the added value? If you've set up an elaborate web of plugins and configured your keybindings reducing the overhead(ache) of the vim defaults and want to have all that power at hand when accessing remote files - now you can. This way you can edit the files as if they were on your machine. Of course sudoing some /etc/ files might introduce obstacles especially if you have no read access with the user login in. One could try still opening the
+remote file and writing with sudo by entering ``:w !sudo %`` in vim after the edits.
 
-Now if several files have been opened thusly, they can be shuffled through back and forth by Ctrl-i and Ctrl-b. Also the command mode accepts ``:b <Tab>`` (notice the space) in which case the open buffers will be shown by name (and enter opens the shown buffer).
+## Accessing Local Files
 
-Instead of going through buffers one-by-one, they can be enlisted with ``:ls`` which enumerates the list of buffers. To select any of these listed ones: ``:b <number><enter>``.
+When opening vim, it holds a reference to its current working directory. ``gf`` opens a file that has been written under the cursor and will work if the path of it is relative (or absolute) to the vim's working directory ``:pwd``. So if one navigates on top of 'main.py' and the directory has such a file, ``girlfriend`` - sorry - ``gf`` opens that file. This can be tested easily by "cd"ing into a directory with files, opening vim, running ``:read !ls``, placing the cursor on top of any of the files and pressing ``gf``.
 
-Also this: [some github](https://gist.github.com/ajh17/a8f5f194079818b99199)
+Now if several files have been opened thusly, they can be shuffled through back and forth by ``Ctrl-i`` and ``Ctrl-o`` (in the normal mode). ``:b <Tab>`` (notice the space) opens buffers which are shown by name (enter opens the shown buffer). 
+
+Additionally, instead of going through buffers one-by-one, they can be enlisted with ``:ls`` which enumerates the list of buffers. To select any of these listed ones: ``:b <number><enter>``. These could be mapped together to show a list of buffers (i.e. like open files) and waiting for input for selecting the file to be edited by number:
+{{< highlight vim >}}
+:map <Leader>B :ls<CR>:buffer 
+{{< / highlight >}}
+
+
+Here are some more ways to handle files from vim: [Compile, build and error check workflow](https://gist.github.com/ajh17/a8f5f194079818b99199)
