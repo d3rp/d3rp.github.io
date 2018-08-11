@@ -1,4 +1,5 @@
     <footer id="site-footer">
+        {{ template "_internal/disqus.html" . }}
         <div class="container">
           {{ with .Site.Params.instagram }}
             <a href="https://www.instagram.com/{{ . }}/" title="Instagram" target="_blank"><span class="tooltip"><i class="fa fa-instagram"></i></span></a>
