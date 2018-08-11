@@ -1095,4 +1095,5 @@ p-post-title {
 }
 #site-header {
 	margin-bottom: 0;
+	min-height: 5em;
 }
