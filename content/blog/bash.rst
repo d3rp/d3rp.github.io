@@ -3,11 +3,12 @@ title: "Top 10 Tips to Safely Trim Your Fingernails with a Chainsaw"
 date: 2018-08-11T11:43:49+03:00
 ---
 
-Top 10 Tips to Safely Trim Your Fingernails with a Chainsaw
-###########################################################
+.. Top 10 Tips to Safely Trim Your Fingernails with a Chainsaw
+.. ###########################################################
 
 Or, Why I think Bash should stay out of production environments
 ===============================================================
+
 
 I've always considered proficiency in shell scripting a virtue and a requirement for working in UNIX environments. This is partly true: Interactive shell scripting is, in my opinion, one of the best computer interfaces available, and I don't see this changing anytime soon. But the fact that you can seemingly achieve what you need quickly and concisely will 
 tempt you into using shell scripts for automation of critical tasks. 

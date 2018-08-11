@@ -1,16 +1,12 @@
 baseURL         = "http://www.5min.ninja"
 languageCode    = "en-us"
 title           = "5min ninja"
-theme           = "cocoa"
+theme           = ["igoyak", "detox"]
 contentdir      = "content"
 publishdir      = "public"
-#pygmentsUseClasses = true
 pygmentsStyle    = "monokai"
 canonifyurls    = true
 highlight       = true
-
-#[permalinks]
-#blog            = "blog/:slug/"
 
 [taxonomies]
   tag           = "tags"
