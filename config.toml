@@ -7,7 +7,6 @@ publishdir      = "public"
 pygmentsStyle    = "monokai"
 canonifyurls    = true
 highlight       = true
-disqusShortname = "5min-ninja"
 
 [taxonomies]
   tag           = "tags"
@@ -26,3 +25,4 @@ twitter         = "//twitter.com/rojun_itu"
 avatar          = "img/running-ninja.jpg"
 author          = "Gustav Larsson, Joni Turunen, Seyoung Park"
 year            = "2018"
+disqusShortname = "5min-ninja"
