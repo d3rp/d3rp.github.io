@@ -22,7 +22,7 @@ The message I'm trying to get across is:
 I'm not considering Bash appropriate for writing important applications. But I am evaluating it as something it is commonly used for: Writing scripts to **surround and support** important applications, such as building release artifacts, running test automation and performing deployments. 
 
 
-Therefore, this blog post will focus on a single feature I consider essential: **Exit when something goes wrong**. I don't care what Bash decides to do: :code:`SIGKILL` itself, kernel panic, or set the computer on fire. Anything is better than continuing despite errors. 
+Therefore, this blog post will focus on a single feature I consider essential: **Exit when something goes wrong**. I don't care what Bash decides to do: :code:`SIGKILL` itself, kernel panic, or set the computer on fire. When running scripts that surround and support important applications, anything is better than continuing despite errors.
 
 
 Bash "strict mode" :code:`set -euo pipefail`
@@ -53,7 +53,7 @@ Let's say we have been using Bash for a couple of years and have started getting
 
 
 
-These three commands are called "Bash strict mode" by many resources online, and are described as the fix for the dangerous behaviours of Bash. 
+These three commands are referred to as "Bash strict mode" by many resources online, and will supposedly protect against the dangerous pitfalls of Bash.
 Whether this is a fair description remains to be seen. 
 
 **From here on, assume that every single code sample is preceeded by** :code:`set -euo pipefail`.  Now let's write some production code. 
@@ -578,21 +578,16 @@ I honestly don't know if this is according to rule 2 or 3 above, but I don't car
 Exiting Bash
 ============
 
-I feel like I've been in an abusive relationship for the last 10 years. Most of the time, everything was fine, but if I'd fail to follow some subtle, seemingly arbitrary rule, I'd get slapped in my metaphorical face. 
-But I though it was my own fault, for not knowing enough. So I kept going, learning more and more obscure rules because I thought it was worth it. I just needed to get better and all problems would go away. 
 
-But no more. 
+**The point of this post is not to teach you how to use Bash more safely, but to tell you that you shouldn't have to.**
 
-**The point of this post is not to teach you how to use Bash more safely, but to tell you that you that you shouldn't have to.**
-
-Let's suppose that you still would like to anyway. You are willing to spend the time necessary to learn all of the subtle behavior and accept the mental overhead needed to write code while going through all the rules in your head. 
+Let's suppose that you still would like to anyway. You are willing (like this author, apparently) to spend unreasonable amounts of time studying the subtle behavior of Bash and accept the mental overhead needed to write code while going through all the rules in your head. 
 Unless you live in a vacuum, this is not enough.
-If you work in a team, you cannot assume that everyone will be as dedicated as you, which means that eventually someone will add a seemingly innocent AND-statement which could make your production script unreliable. 
+If you are part of a team, you cannot assume that everyone will be as dedicated to learn the intricacies of Bash as you are.  Someone will eventually add a seemingly innocent AND-statement which could make your production script unreliable. 
 
 This is especially insidious because it relates to error handling. Most of the time, everything seems to be working fine. The problem with the last script might not have revealed itself, because :code:`scp` has never failed so far, but eventually there will be a network glitch. 
-Bash allows you to quickly write scripts that *seem* to work, while still having huge logic flaws.  
+Bash allows you to quickly write scripts that *seem* to work, but don't handle corner cases in a sane way. 
 
 
 I'm aware that these issues are not by design, but due to technical limitations and backwards compatibility. As an end-user of this tool however, it doesn't make any difference. I simply want to use tools I can trust. 
 
-If you are in a bad relationship with someone, it's not your responsibility to tip-toe around them. It is your responsibility to get out. 
