@@ -304,7 +304,7 @@ Command Substitution
 
 To use output from commands in other commands, we use command substitution :code:`$()`. 
 
-**Third quiz:** Let's say we want to encrypt some secret using a random password. Which one of these is safer if :code:`generate_password` fails for any reason?
+**Third quiz:** Let's say we want to encrypt some secret using a random password. Which one of these is safer if :code:`generate_password` fails?
 
 {{< highlight bash >}}
     pw="$(generate_password)"
@@ -353,7 +353,7 @@ Reading :code:`man bash` reveals the answer:
 Even if :code:`generate_password` fails, Bash will keep going with a bad password. 
 So the only safe way to use local variables with command substitution is to define and assign variables on different lines: 
 
-{{< highlight bash >}}
+{{< highlight bash "hl_lines=3-4" >}}
     # This is actually safe
     f () {
       local pw
@@ -581,7 +581,7 @@ Exiting Bash
 
 **The point of this post is not to teach you how to use Bash more safely, but to tell you that you shouldn't have to.**
 
-Let's suppose that you still would like to anyway. You are willing (like this author, apparently) to spend unreasonable amounts of time studying the subtle behavior of Bash and accept the mental overhead needed to write code while going through all the rules in your head. 
+Let's suppose that you still would like to anyway. You are willing (like me, apparently) to spend unreasonable amounts of time studying the subtle behavior of Bash and accept the mental overhead needed to write code while going through all the rules in your head. 
 Unless you live in a vacuum, this is not enough.
 If you are part of a team, you cannot assume that everyone will be as dedicated to learn the intricacies of Bash as you are.  Someone will eventually add a seemingly innocent AND-statement which could make your production script unreliable. 
 
@@ -590,4 +590,6 @@ Bash allows you to quickly write scripts that *seem* to work, but don't handle c
 
 
 I'm aware that these issues are not by design, but due to technical limitations and backwards compatibility. As an end-user of this tool however, it doesn't make any difference. I simply want to use tools I can trust. 
+
+In an ideal world, I'll write a follow-up to describe the perfect Bash substitute. Let's see how that goes. 
 
