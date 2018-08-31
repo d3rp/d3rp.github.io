@@ -1,6 +1,6 @@
-baseURL         = "http://www.5min.ninja/"
+baseURL         = "http://typingducks.com/"
 languageCode    = "en-us"
-title           = "5min ninja"
+title           = "typing ducks"
 theme           = ["igoyak", "detox"]
 contentdir      = "content"
 publishdir      = "public"
