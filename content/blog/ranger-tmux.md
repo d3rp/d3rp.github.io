@@ -1,5 +1,5 @@
 ---
-title: "Split Tmux Window from Ranger"
+title: "TMUX Heart Ranger"
 date: 2018-02-15T20:26:38+02:00
 author: "Joni Turunen"
 ---
