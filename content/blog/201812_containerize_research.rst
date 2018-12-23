@@ -9,7 +9,7 @@ TLDR;
 =====
 Reproduction is an important part of science. Use a container like Docker or Singularity which contains everything about your research: code, data, libraries and software dependencies. With containers reproducing the environment now takes a matter of minutes. FYI `Andrej Karpathy <https://twitter.com/karpathy?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor>`_, the director of AI at Tesla, also thinks it’s a good idea [1]_.
 
-{{< figure src="/static/201812_containerize_research/docker_quick_demo.gif" class="aligncenter" caption="\< Figure 1. Run Tensorflow without compiling in less than 5 minutes! Your mileage may vary depending on your connection to Docker Hub \>" >}}
+{{< figure src="/static/201812_containerize_research/docker_quick_demo.gif" caption="\< Figure 1. Run Tensorflow without compiling in less than 5 minutes! Your mileage may vary depending on your connection to Docker Hub \>" >}}
 
 -----
 
@@ -57,7 +57,7 @@ Main virtue of containers
 How does a container look like?
 -------------------------------
 
-{{< figure src="/static/201812_containerize_research/container_look.png" class="aligncenter" caption="\< Figure 2. A Tensorflow Docker container on macOS \>" >}}
+{{< figure src="/static/201812_containerize_research/container_look.png" caption="\< Figure 2. A Tensorflow Docker container on macOS \>" >}}
 
 A container is directly accessible through a shell. Since containers share its host kernel, :code:`uname -a` returns the host kernel. In the above case, it shows the Alpine Linux VM from Docker app on my macOS Sierra. The container is like a barebone OS without a kernel.
 
@@ -65,7 +65,7 @@ Container vs. Virtual Machine vs. Python Virtual Environment
 ------------------------------------------------------------
 The user experience in a container is very similar to that of VMs. The main differences are the facts that a container instance is only accessible through a shell and it's much faster than VMs. Naturally, many people are confused between the two but here’s the bottom line: **VMs virtualize hardware, and containers virtualize operating systems** [2].
 
-{{< figure src="/static/201812_containerize_research/container_vs_vm.png" class="aligncenter" caption="\< Figure 3. Architecture comparison between systems running containers and VMs. Image credit: Docker \>" >}}
+{{< figure src="/static/201812_containerize_research/container_vs_vm.png" caption="\< Figure 3. Architecture comparison between systems running containers and VMs. Image credit: Docker \>" >}}
 
 As you can see from the figure 3, VMs have their own entire OS, and containers share its host kernel. You could say a container is like a *hyper minimal VM* for your application. Therefore, containers are very much lighter and VERY much faster than VMs(Note VMs are also fast with hardware extensions). In fact, my Tensorflow project containers are several hundred megabytes which in VM would have costed me several gigabytes. Running a containerized app is practically as fast as running a local app.
 
@@ -83,7 +83,7 @@ Is container as fast as a native execution? I test with a simple Tensorflow MNIS
 
 I must put a disclaimer that I’m writing this during my travel to Seoul, so I ran the same script only 10 times. The native execution is using a Miniconda virtual environment.
 
-{{< figure src="/static/201812_containerize_research/benchmark.png" class="aligncenter" caption="\< Figure 4. MNIST benchmark: native execution vs. Singularity. \>" >}}
+{{< figure src="/static/201812_containerize_research/benchmark.png" caption="\< Figure 4. MNIST benchmark: native execution vs. Singularity. \>" >}}
 
 The mean of the running times in the virtual environment is 21 seconds and Singularity 23 seconds. The container is 10% slower than the native version. This is not awesome but still very usable.
 
@@ -126,7 +126,7 @@ Look for references from other project
 --------------------------------------
 Many projects have similar dependencies. Both PyTorch and Tensorflow use NVIDIA drivers. So I went to `Tensorflow Github repo <https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/dockerfiles/dockerfiles>`_. 
 
-{{< figure src="/static/201812_containerize_research/tf_repo.png" class="aligncenter" caption="\< Figure 5. The Tensorflow Github Repository \>" >}}
+{{< figure src="/static/201812_containerize_research/tf_repo.png" caption="\< Figure 5. The Tensorflow Github Repository \>" >}}
 
 Then I chose a version of Dockerfile I need which is :code:`gpu.Dockerfile`. I deleted everything except the dependencies. Then I added commands to install PyTorch.
 
