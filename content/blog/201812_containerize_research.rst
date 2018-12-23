@@ -103,7 +103,7 @@ I will explain how you can convert a Docker image to a Singularity image later i
 
 99% reproducible
 ----------------
-Loading a container image does not simply guarantee an absolute reproduction. Different hardware have different acceleration technologies. The compiled byte code stored in the container might be optimized for a specific hardware, and running the code on incompatible hardware might not work or worse, it might give you false results. For instance, some CPUs support AVX(Advanced Vector Extension) and Nvidia GPUs support CUDA and this may limit the container to machines that support such instructions. 
+Loading a container image does not simply guarantee an absolute reproduction. Different hardware have different acceleration technologies. The compiled byte code stored in the container might be optimized for a specific hardware, and running the code on incompatible hardware might not work or worse, it might give you false results. For instance, some CPUs support AVX(Advanced Vector Extension) and NVIDIA GPUs support CUDA and this may limit the container to machines that support such instructions. 
 
 In case of Aalto `Triton cluster <http://scicomp.aalto.fi/triton/index.html>`_, all software had to be compiled without AVX as older nodes do not support it. Likewise the newest Tensorflow does not work on Fermi GPUs. 
 
@@ -124,7 +124,7 @@ cd PerceptualSimilarity
 
 Look for references from other project
 --------------------------------------
-Many projects have similar dependencies. Both PyTorch and Tensorflow use NVIDIA drivers. So I went to `Tensorflow Github repo <https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/dockerfiles/dockerfiles>`_. 
+Many projects have similar dependencies. Both PyTorch and Tensorflow use NVIDIA packages. So I went to `Tensorflow Github repo <https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/dockerfiles/dockerfiles>`_. 
 
 {{< figure src="/static/201812_containerize_research/tf_repo.png" caption="\< Figure 5. The Tensorflow Github Repository \>" >}}
 
@@ -167,7 +167,7 @@ A great thing about Singularity is that you can build from a Docker image. This 
 {{< highlight bash >}}
 singularity -d -v build ~/perceptual-similarity.simg docker://username/perceptual-similarity:dev
 {{< /highlight >}}
-Singularity supports Nvidia GPUs natively. Just add :code:`--nv` command. Enter the container shell:
+Singularity supports NVIDIA GPUs natively. Just add :code:`--nv` command. Enter the container shell:
 {{< highlight bash >}}
 # --nv is for exposing your GPU
 singularity shell -s /bin/bash --nv -B PerceptualSimilarity:/notebooks 
