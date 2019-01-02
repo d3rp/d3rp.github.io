@@ -175,7 +175,7 @@ singularity shell -s /bin/bash --nv -B PerceptualSimilarity:/notebooks
 python -c "import torch; print(torch.__version__)"
 {{< /highlight >}}
 
-At Aalto, we recommend building a Singularity image by pulling from a Docker registry, because Docker build is much faster than Singularity for testing as Docker builds modular layers while Singularity builds from scratch every time. 
+At Aalto, we recommend building a Singularity image by pulling from a Docker registry, because Docker build is much faster than Singularity for testing as Docker builds modular layers while Singularity builds from scratch every time(as of Singularity 2.5). 
 
 Other materials on containers
 -----------------------------
