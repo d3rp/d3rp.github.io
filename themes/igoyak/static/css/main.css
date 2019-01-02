@@ -923,7 +923,7 @@ article.li {
 }
 
 .post-header {
-	text-align: center
+	text-align: left
 }
 
 .post-title {
@@ -933,7 +933,7 @@ article.li {
 .post-time {
 	text-transform: uppercase;
 	letter-spacing: 4px;
-	margin-bottom: 30px;
+	margin-bottom: 5px;
 	font-size: 80%
 }
 
