@@ -175,7 +175,7 @@ singularity shell -s /bin/bash --nv -B PerceptualSimilarity:/notebooks
 python -c "import torch; print(torch.__version__)"
 {{< /highlight >}}
 
-At Aalto, we recommend building a Singularity image by pulling from a Docker registry, and that’s how I do it. However, you can build from a Singularity def file as well.
+At Aalto, we recommend building a Singularity image by pulling from a Docker registry, because Docker build is much faster than Singularity for testing as Docker builds modular layers while Singularity builds from scratch every time. 
 
 Other materials on containers
 -----------------------------
