@@ -1,6 +1,22 @@
 <article class="{{ .Type }}">
 	<header class="post-header">
         <h1 class="p-post-title">{{ .Title }}</h1>
+        {{ if ne .Title "About"}}
+        <section class="h-1">
+            {{ if isset .Params "author" }}
+            <section class="author">
+                <!-- <p>Words by {{ index .Params "author" }}</p> -->
+                <p>Words by <a href="{{ .Site.BaseURL }}/about">{{ index .Params "author" }}</a></p>
+            </section>
+            {{ else if isset .Site.Params "author" }}
+            <section class="author">
+                <p>Words by {{ index .Site.Params "author" }}</p>
+            </section>
+            {{ end }}
+            
+            <p class="f-post-time"><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "January 2, 2006" }}</time></p>
+        </section>
+        {{ end }}
     </header>
 
     <section class="post-content">
@@ -10,7 +26,7 @@
     <hr>
 
     <footer class="post-footer">
-        <section class="f-1">
+        <!-- <section class="f-1">
             {{ if isset .Params "author" }}
             <section class="author">
                 <p>Words by {{ index .Params "author" }}</p>
@@ -22,7 +38,7 @@
             {{ end }}
             
             <p class="f-post-time"><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "January 2, 2006" }}</time></p>
-        </section>
+        </section> -->
                         
         <section class="f-2">
             <section class="share">
