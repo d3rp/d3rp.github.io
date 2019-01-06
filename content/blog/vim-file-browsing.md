@@ -20,7 +20,7 @@ George Ornbo showed a good alternative work flow to ctrl-p (or in fact [nerdtree
 
 **I Whip My Files Back and Forth..**
 
-Vim has hotkeys to file navigational features in itself. When opening vim, it holds a reference to its current working directory. ``gf`` opens a file in the current working directory, if such can be found and the the files (relative) path is under the cursor. So if one navigates on top of written text in the file e.g. 'main.py' and the directory has such a file, ``gf`` opens that file in a new buffer. This can be tested easily by "cd"ing into a directory with files, opening vim, running ``:read !ls`` - which pastes the output of ``ls`` in the current buffer - and placing the cursor on top of any of the files and pressing ``gf``.
+Then there's vim's basic file navigational features.. Pressing ``gf`` when the cursor is over a file name - or a relative path - opens a file in the current working directory, if such file can be found. This can be tested easily by "cd"ing into a directory with files, opening vim, running ``:read !ls`` - which pastes the output of ``ls`` in the current buffer - and placing the cursor on top of any of the files and pressing ``gf``.
 
 Vim holds a list of previously opened [buffers](https://romainl.github.io/the-patient-vimmer/2.html#_buffers). Now if several files have been opened during the vim session, they can be shuffled through back and forth by ``Ctrl-i`` and ``Ctrl-o`` (in the normal mode). ``:b <Tab>`` (notice the space) opens buffers which are shown by name (enter opens the shown buffer). 
 
@@ -37,7 +37,7 @@ If you haven't tried **vimgrep** before, here's a quick tour. Vimgrep greps matc
 
 After running that command, open the "quick fix window" with:
 
-``:cwindow``
+``:cwindow`` or just ``cwin``
 
 The rest should be quite intuitive. Navigating through the list pressing enter on the shown line opens that file on that line in a new buffer. In the vimgrep command above, the "word" refers to the pattern and ``**/*.*`` to matching it to any files recursively from subfolders of the current working directory.
 
@@ -45,11 +45,11 @@ Here are some more ways to handle files similarily to vimgrep from vim: [Compile
 
 ## Accessing Remote Files
 
-Netrw was mentioned in the previous section. The biggest factor in using netrw for me is that it works similarily for remote files as it does for local files. The added value? If you've weaved yourself an elaborate web of plugins and configured your keybindings reducing the overhead(ache) of the vim defaults and want to have all that power at hand when accessing remote files - now you can. This way you can edit the files as if they were on your machine by typing something like:
+I mentioned netrw in the previous section. The biggest factor in using netrw for me is that it works similarily for remote files as it does for local files. The added value? If you've weaved yourself an elaborate web of plugins and configured your keybindings reducing the overhead(ache) of the vim defaults and want to have all that power at hand when accessing remote files - now you can. This way you can edit the files as if they were on your machine by typing something like:
 
 ``vim scp://remote_host/``
 
-So how can we make this happen? For convenience, make some changes to the host resolving configurations. You might have several ssh keys for different services/servers.
+So how can we make this happen? For convenience, lets make some changes to the host resolving configurations. You might have several ssh keys for different services/servers.
 
 {{< highlight sh >}}
 # file: ~/.ssh/config
@@ -76,7 +76,7 @@ vim scp://HAL/filename
 
 What should open before your eyes is the file imaginatively named 'filename' located on the remote host, in your (remote) user's **home directory**.
 
-As netrw works like a filebrowser in a terminal, it's possible to leverage it to show the root of your home directory on the remote host as a file tree by reducting the file.py:
+As netrw works like a filebrowser in a terminal, it's possible to leverage it to show the root of your home directory on the remote host as a file tree with just:
 {{< highlight bash >}}
 vim scp://my_remote_server/
 {{< / highlight >}}
@@ -89,6 +89,5 @@ vim scp://username@server_IP_or_DNS[:port]//absolute_path/to/file.cpp
 All is well in the kingdom, but then - on some unsuspecting moment - vim comes back at you with:
 ``(netrw) not a netrw-style url; netrw uses protocol://[user@hostname[:port]/[path]``
 
-"Oh you, vim..", you chuckle, as the harmless looking oneliner fails to scare you. Waiting for the netrw's file view - which never opens - the oneliner begs for a closer look and soon enough provokes a double-take when you get to read the part about the protocol. Metaphorical gears be crackling while mashing together abstractions of ssh configurations, port numbers, vimrc lines and all other little details that might have taken the wrong typo. Here's a tip from a frustrated blogger, that spent far too long on this: The first step is to check what is the last character of the given argument; If vim complains about the formatting in this manner, check that the host name ends in a slash '/'. See example above.
-
+"Oh you, vim..", you chuckle, as the harmless looking oneliner fails to scare you. Waiting for the netrw's file view - which never opens - the oneliner begs for a closer look and soon enough provokes a double-take when you get to read the part about the protocol. Metaphorical gears be crackling while mashing together abstractions of ssh configurations, port numbers, vimrc lines and all other little details that might have taken the wrong typo. Here's a tip from a frustrated blogger, that spent far too long on this: check that the host name ends in a slash '/'.
 
