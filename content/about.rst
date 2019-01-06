@@ -5,7 +5,7 @@ date: 2018-02-04T21:55:05+02:00
 
 *Typing Ducks* are three humans just like you. We live and breathe technology, and we're constantly typing. 
 
-- **Gustav Larsson**
+- **Gustav Larsson**: Software developer at F-Secure and CS student at Aalto University
 
 - **Joni Turunen**
 
