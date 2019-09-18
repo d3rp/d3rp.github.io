@@ -19,6 +19,11 @@ If the themes still don't kick up and run properly (the actual directories are l
 
 (obviously for detox try detox - ``cat .gitmodules``)
 
+## Docker 
+```bash
+docker run -v path-to-blog/:/app -i -t --rm -p 1313:1313 shinyeyes/hugo:v0.52
+```
+
 ### RST vs MD
 
 Both should work as long as rst2html is installed (for rst). This can be found in *python-docutils* on arch.
