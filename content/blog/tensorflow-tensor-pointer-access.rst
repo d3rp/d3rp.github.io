@@ -1,9 +1,10 @@
 ---
-title: "Access Pointer of Tensorflow Tensor"
+title: "Access a Pointer of Tensorflow Tensor"
 date: 2019-09-17T21:14:28+03:00
 author: Seyoung Park
 draft: false
 ---
+
 
 When I was porting the PyTorch front-end of `Redner <https://github.com/BachiLi/redner>`_, a differentiable computer graphics renderer, to Tensorflow, I needed to access pointers of tensors. It's because how Redner works. Redner has its rendering logic in the C++ back-end, and used PyTorch for backpropagation & training framework.
 
