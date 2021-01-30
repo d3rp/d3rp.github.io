@@ -45,7 +45,7 @@ This requires more commitment, and is less likely to get prioritized.
 
 
 
-To make things more interesting, we can also consider local maxima (or a `saddle point <https://en.wikipedia.org/wiki/Saddle_point>`_, but I don't want to plot that). 
+To make things more interesting, we can also consider a local maximum (or a `saddle point <https://en.wikipedia.org/wiki/Saddle_point>`_, but I don't want to plot that). 
 Everyone working on the code will agree that it's possible to make things better, but not 
 necessarily on which direction is likely to lead to the lower minima. 
 
