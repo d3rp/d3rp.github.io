@@ -2,6 +2,7 @@
 title: "Vim in 2 Minutes"
 date: 2018-03-26T20:19:59+03:00
 draft: true
+author: "Joni Turunen"
 ---
 
 - Record desktop with screenkey on. Write a bunch of dada with "quotes" and "we're in insert mode" using the mnemonics mentioned here.
