@@ -23,6 +23,7 @@ map eS eval if 'TMUX' in os.environ: fm.execute_console("shell tmux splitw -h -c
 Now navigating onto a file in ranger (having of course started it inside tmux)
 and pressing ``e`` opens a menu to select between ``h, v, s, S``. These
 consecutive choices will split the view into panes 
+
 - (h)orizontally opening the file in vim
 - (v)ertically opening the file in vim
 - (s)hell in the working directory splitting pane horizontally
