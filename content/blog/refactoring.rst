@@ -13,13 +13,13 @@ When performing code review, I think it's important to consider what kind of fee
 what to omit. I'm thinking that certain flaws should never be allowed to enter the code base, while
 others are ok, if it helps the development velocity.
 
-**Refactoring is an optimization problem. And we can make it an easy or difficult one.**
+**Refactoring is an optimization problem. And we can make it an easy or a difficult one.**
 
 If you know where you're going, and the path is `convex <https://en.wikipedia.org/wiki/Convex_function>`_, it's
 a relatively effortless activity that is usually worth the time investment. 
 We can use the cheap `gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ algorithm . 
 
-If you only have local problems, such as poorly named local variables, or unnecessarily complex logic
+If you only have local problems, such as poorly named local variables or unnecessarily complex logic
 within a single function, this is easy to fix. 
 
 
@@ -43,10 +43,12 @@ This requires more commitment, and is less likely to get prioritized.
 
 .. Algorithmically, the problem becomes NP-Hard. 
 
+Put in a different way, the code review comments that are easiest to make are the least likely to provide value. 
+**A truly valuable reivew requires real understanding and identifies a way out of a local minimum**, which of course requires effort. 
 
 
 To make things more interesting, we can also consider a local maximum (or a `saddle point <https://en.wikipedia.org/wiki/Saddle_point>`_, but I don't want to plot that). 
 Everyone working on the code will agree that it's possible to make things better, but not 
-necessarily on which direction is likely to lead to the lower minima. 
+necessarily on which direction is likely to lead to the lower minimum. 
 
 {{< figure src="/static/refactoring/plot3.png" width="400px" >}}
