@@ -1,6 +1,6 @@
 ---
 title: "Refactoring as an optimization problem"
-date: 2021-01-30T12:06:51+02:00
+date: 2021-02-01T12:06:51+02:00
 author: "Gustav Larsson"
 draft: true
 ---
@@ -20,7 +20,7 @@ others are ok, if it helps the development velocity.
 .. With an existing code base, refactoring is the way we decrease maintenance cost.
 
 Refactoring is the way we decrease maintenance cost of an existing code base. 
-**And we can see refactoring as an optimization problem.**  If we are thoughful, we can make it an easy optimization problem.
+**And we can see refactoring as an optimization problem.**  If we are thoughtful, we can make it an easy optimization problem.
 
 .. **Refactoring is an optimization problem. And we can make it an easy or a difficult one.**
 
@@ -36,20 +36,23 @@ If you only have local problems, such as poorly named local variables or unneces
 within a single function, this is easy to fix. 
 It's also an isolated problem: If the abstraction that the function provides is still reasonable, the fact
 that the implementation is messy shouldn't affect the rest of the application. 
-Fully getting rid of these types of problems is of course preferrable, but shouldn't be the main goal of a
+Fully getting rid of these types of problems is of course preferable, but shouldn't be the main goal of a
 code review. 
 
 
 However, if there's a messy relationship and coupling between multiple methods or multiple classes (or multiple systems!), this
 should probably be fixed before the change enters the code base. 
-Cleaning it up after the fact requires much much more effort, and it has a tendency of being a problem that accumulates more problems. 
+
+.. Cleaning it up after the fact requires much more effort, and it has a tendency of being a problem that accumulates more problems. 
 
 
 {{< figure src="/static/refactoring/plot1.png" width="400px" >}}
 
 Seen as an optimization problem, we are stuck in an local minimum: We might still be able to make small
 improvements, but to make significant improvements, we need to make things worse before they get better. 
-This requires more commitment, and is less likely to get prioritized.  
+This requires more commitment, and is less likely to get prioritized.
+Additionally, the hills around this minimum tend to grow by themselves, if left unattended.  
+
 Avoiding getting into this state should be a priority. 
 
 
