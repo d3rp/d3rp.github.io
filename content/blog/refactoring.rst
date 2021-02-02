@@ -7,7 +7,10 @@ draft: true
 
 .. http://jakevdp.github.io/blog/2012/10/07/xkcd-style-plots-in-matplotlib/
 
-I've been thinking of software development and machine learning.
+.. I've been thinking of software development and machine learning.
+
+I've been thinking of machine learning, software development and refactoring.
+I've started too see **refactoring as an optimization problem. And if we are thoughtful, we can try to make it an easy one.** 
 
 .. and I'm starting to see refactoring as an optimization problem. 
 
@@ -19,15 +22,32 @@ others are ok, if it helps the development velocity.
 
 .. With an existing code base, refactoring is the way we decrease maintenance cost.
 
-Refactoring is the way we decrease maintenance cost of an existing code base. 
-**And we can see refactoring as an optimization problem.**  If we are thoughtful, we can make it an easy optimization problem.
+.. Refactoring is the way we decrease maintenance cost of an existing code base. 
+
+.. If we are thoughtful about
+
+
+.. **And we can see refactoring as an optimization problem.**  If we are thoughtful, we can make it an easy optimization problem.
 
 .. **Refactoring is an optimization problem. And we can make it an easy or a difficult one.**
 
+
+.. When the new code has entered the code base, the way we improve maintainability cost is by refactoring, we 
+.. "make code changes to decrease the maintenance cost".
+
+.. is optimizing the refactoring problem.
+
+With an existing code base, we can improve maintainability by "making code changes until the maintenance cost
+is lower than before".
 If you know where you're going, and the path is `convex <https://en.wikipedia.org/wiki/Convex_function>`_, it's
 a relatively effortless activity that is usually worth the time investment. 
-We can use the cheap `gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ algorithm . 
+We can use the cheap `gradient descent <https://en.wikipedia.org/wiki/Gradient_descent>`_ algorithm, and take as small steps as we want. 
 
+
+.. points:
+.. - it cheap to fix
+.. - it's possible to do in small, risk-free steps
+.. - it's hidden behind an abstraction, and doesn't encourage more problems
 
 
 {{< figure src="/static/refactoring/plot2.png" width="400px" >}}
@@ -36,8 +56,9 @@ If you only have local problems, such as poorly named local variables or unneces
 within a single function, this is easy to fix. 
 It's also an isolated problem: If the abstraction that the function provides is still reasonable, the fact
 that the implementation is messy shouldn't affect the rest of the application. 
-Fully getting rid of these types of problems is of course preferable, but shouldn't be the main goal of a
-code review. 
+Preventing these types of problems to enter the code base is of course preferable, but it shouldn't be the main goal of a code review.
+
+.. Fully getting rid of these types of problems is of course preferable, 
 
 
 However, if there's a messy relationship and coupling between multiple methods or multiple classes (or multiple systems!), this
@@ -50,9 +71,8 @@ should probably be fixed before the change enters the code base.
 
 Seen as an optimization problem, we are stuck in an local minimum: We might still be able to make small
 improvements, but to make significant improvements, we need to make things worse before they get better. 
-This requires more commitment, and is less likely to get prioritized.
-Additionally, the hills around this minimum tend to grow by themselves, if left unattended.  
-
+This requires more commitment, since we cannot take small steps. 
+Also, the hills around this minimum tend to grow by themselves if left unattended.  
 Avoiding getting into this state should be a priority. 
 
 
@@ -60,7 +80,9 @@ Avoiding getting into this state should be a priority.
 
 Put in a different way, the code review comments that are easiest to make are the least likely to provide value. 
 **A truly valuable review doesn't point towards the nearest local minimum, it peeks over the hill and finds a better one.**
-If the checked in code is kept convex, technical debt is less likely to build. 
+Keeping the checked-in code convex helps managing technical debt. 
+
+.. If the checked-in code is kept convex, technical debt is less likely to build. 
 
 .. **A truly valuable reivew requires real understanding and identifies a way out of a local minimum**. 
 
