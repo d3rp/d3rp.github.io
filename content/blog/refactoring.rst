@@ -1,8 +1,7 @@
 ---
 title: "Refactoring as an optimization problem"
-date: 2021-02-01T12:06:51+02:00
+date: 2021-02-02T12:06:51+02:00
 author: "Gustav Larsson"
-draft: true
 ---
 
 .. http://jakevdp.github.io/blog/2012/10/07/xkcd-style-plots-in-matplotlib/
@@ -10,13 +9,15 @@ draft: true
 .. I've been thinking of software development and machine learning.
 
 I've been thinking of machine learning, software development and refactoring.
-I've started too see **refactoring as an optimization problem. And if we are thoughtful, we can try to make it an easy one.** 
+I've started to view **refactoring as an optimization problem.** And I think we can control how hard the problem is. 
+
+.. And if we are thoughtful, we can try to make it an easy one.** 
 
 .. and I'm starting to see refactoring as an optimization problem. 
 
 When performing code reviews, I think it's important to consider what kind of feedback to give, and
 what to omit. 
-Besides discovering pure bugs, a big part of code reviews is identifying potential issues that can affect maintainability. 
+Besides discovering pure bugs, a big part of code reviews is identifying issues that affect maintainability. 
 I'm thinking that certain flaws should never be allowed to enter the code base, while
 others are ok, if it helps the development velocity.
 
@@ -56,7 +57,7 @@ If you only have local problems, such as poorly named local variables or unneces
 within a single function, this is easy to fix. 
 It's also an isolated problem: If the abstraction that the function provides is still reasonable, the fact
 that the implementation is messy shouldn't affect the rest of the application. 
-Preventing these types of problems to enter the code base is of course preferable, but it shouldn't be the main goal of a code review.
+Preventing these types of problems from entering the code base is of course preferable, but it shouldn't be the main goal of a code review.
 
 .. Fully getting rid of these types of problems is of course preferable, 
 
@@ -78,7 +79,7 @@ Avoiding getting into this state should be a priority.
 
 .. Algorithmically, the problem becomes NP-Hard. 
 
-Put in a different way, the code review comments that are easiest to make are the least likely to provide value. 
+Put in a different way, the code review comments that are easiest to make are least likely to provide value. 
 **A truly valuable review doesn't point towards the nearest local minimum, it peeks over the hill and finds a better one.**
 Keeping the checked-in code convex helps managing technical debt. 
 
