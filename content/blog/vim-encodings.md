@@ -2,7 +2,6 @@
 title: "Fixing Misencoded Characters with Vim"
 date: 2018-02-08T09:49:18+02:00
 draft: true
-author: "Joni Turunen"
 ---
 
 There was some mysterious \<92\>, \<93\>, \<94\> and \<96\> tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn't stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal. Frankly though, I should've been given the file a few runs with [shred](https://linux.die.net/man/1/shred) and thus sense a hint of closure with my past.

@@ -1,7 +1,6 @@
 ---
 title: "File Exploration in Vim"
 date: 2018-02-06T22:45:48+02:00
-author: "Joni Turunen"
 tags: ["vim", "netrw", "nerdtree", "file explorer"]
 series: ["On a Vim"]
 ---

@@ -2,7 +2,6 @@
 title: "Vim With Cpp and Rust"
 date: 2021-01-30T20:36:42+02:00
 draft: true
-author: "Joni Turunen"
 ---
 
 vim plugins:

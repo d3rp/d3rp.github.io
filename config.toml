@@ -1,6 +1,6 @@
-baseURL         = "http://typingducks.com/"
+baseURL         = "https://5min.ninja/"
 languageCode    = "en-us"
-title           = "typing ducks"
+title           = "5min ninja"
 theme           = ["igoyak", "detox"]
 contentdir      = "content"
 publishdir      = "public"
@@ -20,9 +20,9 @@ identifier      = "blog"
 url             = "/"
 
 [params]
-github          = "//github.com/rojun"
+github          = "//github.com/d3rp"
 twitter         = "//twitter.com/rojun_itu"
 avatar          = "img/running-ninja.jpg"
-author          = "Gustav Larsson, Joni Turunen, Seyoung Park"
-year            = "2018"
+author          = "Itu Rojunen"
+year            = "2022"
 disqusShortname = "5min-ninja"

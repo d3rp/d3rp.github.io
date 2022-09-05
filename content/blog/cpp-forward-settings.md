@@ -2,7 +2,6 @@
 title: "Intuitive settings class from cpr in C++"
 date: 2021-01-30T20:14:30+02:00
 draft: true
-author: "Joni Turunen"
 ---
 
 tl;dr: How to fight the formation of spaghetti code, when designing a configuration/settings

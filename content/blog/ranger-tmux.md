@@ -1,7 +1,6 @@
 ---
 title: "TMUX Heart Ranger"
 date: 2018-02-15T20:26:38+02:00
-author: "Joni Turunen"
 ---
 
 [Ranger](https://github.com/ranger/ranger) is a console based file explorer that
