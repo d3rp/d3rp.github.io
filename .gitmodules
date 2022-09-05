@@ -1,7 +1,3 @@
 [submodule "themes/cocoa"]
 	path = themes/cocoa
 	url = https://github.com/nishanths/cocoa-hugo-theme.git
-
-[submodule "themes/detox"]
-	path = themes/detox
-	url = https://github.com/SuperShinyEyes/hugo-theme-blueberry-detox.git
