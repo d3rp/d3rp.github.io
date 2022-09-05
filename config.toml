@@ -20,12 +20,11 @@ identifier      = "blog"
 url             = "/"
 
 [params]
-github          = "//github.com/d3rp"
-twitter         = "//twitter.com/rojun_itu"
+github          = "github.com/d3rp"
+twitter         = "twitter.com/rojun_itu"
 avatar          = "img/running-ninja.jpg"
 author          = "Itu Rojunen"
 year            = "2022"
-disqusShortname = "5min-ninja"
 
 [security.funcs]
 getenv          = ['^HUGO_', '^WC_']
