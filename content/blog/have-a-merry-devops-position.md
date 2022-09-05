@@ -1,6 +1,7 @@
 ---
 title: "Have a Merry Devops Position"
 date: 2021-02-02T19:21:36+02:00
+author: "Itu Rojunen"
 draft: true
 ---
 

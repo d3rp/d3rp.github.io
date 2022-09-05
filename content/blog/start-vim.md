@@ -1,6 +1,7 @@
 ---
 title: "Vim in 2 Minutes"
 date: 2018-03-26T20:19:59+03:00
+author: "Itu Rojunen"
 draft: true
 ---
 

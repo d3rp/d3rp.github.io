@@ -1,6 +1,7 @@
 ---
 title: "Fixing Misencoded Characters with Vim"
 date: 2018-02-08T09:49:18+02:00
+author: "Itu Rojunen"
 draft: true
 ---
 

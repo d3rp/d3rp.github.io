@@ -1,5 +1,6 @@
 ---
 title: "TMUX Heart Ranger"
+author: "Itu Rojunen"
 date: 2018-02-15T20:26:38+02:00
 ---
 

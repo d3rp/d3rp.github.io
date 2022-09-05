@@ -2,6 +2,7 @@
 title: "File Exploration in Vim"
 date: 2018-02-06T22:45:48+02:00
 tags: ["vim", "netrw", "nerdtree", "file explorer"]
+author: "Itu Rojunen"
 series: ["On a Vim"]
 ---
 

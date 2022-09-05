@@ -1,6 +1,7 @@
 ---
 title: "Intuitive settings class from cpr in C++"
 date: 2021-01-30T20:14:30+02:00
+author: "Itu Rojunen"
 draft: true
 ---
 

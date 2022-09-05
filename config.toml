@@ -26,3 +26,9 @@ avatar          = "img/running-ninja.jpg"
 author          = "Itu Rojunen"
 year            = "2022"
 disqusShortname = "5min-ninja"
+
+[security.funcs]
+getenv          = ['^HUGO_', '^WC_']
+[security.exec]
+allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^rst2html.py$']
+osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']

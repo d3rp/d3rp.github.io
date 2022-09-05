@@ -1,6 +1,7 @@
 ---
 title: "Vim With Cpp and Rust"
 date: 2021-01-30T20:36:42+02:00
+author: "Itu Rojunen"
 draft: true
 ---
 
