@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Itu Rojunen">
+<meta name="description" content="Record desktop with screenkey on. Write a bunch of dada with &ldquo;quotes&rdquo; and &ldquo;we&rsquo;re in insert mode&rdquo; using the mnemonics mentioned here. Think quick: what do these acronyms stand for?
+rtfm irl tl;dr: lol Did you by any chance voice these out silently as full words instead of the initials the acronyms are constructed from? The idea behind the key shortcuts of vim is that every action is a mnemonic of a sequence of keystrokes instead of conjointly pressed keys:">
+
+<meta property="og:title" content="Vim in 2 Minutes" />
+<meta property="og:description" content="Record desktop with screenkey on. Write a bunch of dada with &ldquo;quotes&rdquo; and &ldquo;we&rsquo;re in insert mode&rdquo; using the mnemonics mentioned here. Think quick: what do these acronyms stand for?
+rtfm irl tl;dr: lol Did you by any chance voice these out silently as full words instead of the initials the acronyms are constructed from? The idea behind the key shortcuts of vim is that every action is a mnemonic of a sequence of keystrokes instead of conjointly pressed keys:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/start-vim/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-03-26T20:19:59+03:00" />
+<meta property="article:modified_time" content="2018-03-26T20:19:59+03:00" />
+
+
+
+<title>
+
+
+     Vim in 2 Minutes 
+
+</title>
+<link rel="canonical" href="/blog/start-vim/">
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/running-ninja.jpg" srcset="img/running-ninja.jpg 1x"></a>
+            
+            <a href="/"><div class="name">Itu Rojunen</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="/"><span>Blog</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/d3rp" target="_blank" rel="noopener"><img class="icon" src="/img/github.svg" alt="github" /></a>
+        
+
+        
+
+        
+            <a href="//twitter.com/rojun_itu" target="_blank" rel="noopener"><img class="icon" src="/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Vim in 2 Minutes
+
+</div>
+
+                    <div class="initials"><a href=""></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon Mar 26 2018 20:19:59 EEST'>Mar 26, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>3 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <ul>
+<li>Record desktop with screenkey on. Write a bunch of dada with &ldquo;quotes&rdquo; and &ldquo;we&rsquo;re in insert mode&rdquo; using the mnemonics mentioned here.</li>
+</ul>
+<p>Think quick: what do these acronyms stand for?</p>
+<ul>
+<li>rtfm</li>
+<li>irl</li>
+<li>tl;dr:</li>
+<li>lol</li>
+</ul>
+<p>Did you by any chance voice these out silently as full words instead of the initials the acronyms are constructed from? The idea behind the key shortcuts of vim is that every action is a mnemonic of a sequence of keystrokes instead of conjointly pressed keys:</p>
+<ul>
+<li>5w  = &ldquo;Go to 5th word&rdquo;</li>
+<li>ci&quot; = &ldquo;Change everything inside the hyphens&rdquo;</li>
+<li>dte = &ldquo;Delete until end of the word&rdquo;</li>
+<li>i   = &ldquo;Insert&rdquo;</li>
+</ul>
+<p>The last one refers to &lsquo;insert&rsquo; as in &ldquo;switch to the insert mode&rdquo;. Vim starts in &lsquo;Normal&rsquo; mode from which we can get to the &lsquo;insert&rsquo; mode by typing &lsquo;i&rsquo;.</p>
+<p><img src="/img/vim_diagram_1st_step.png" alt="diagram ftw"></p>
+<p>In &lsquo;insert&rsquo; mode we can write text and we can get back out of the &lsquo;insert&rsquo; mode with &rsquo;esc&rsquo; or &lsquo;ctrl-c&rsquo;.</p>
+<ul>
+<li>a diagram of modes illustrating what keys transission modes
+<img src="/img/diagram.png" alt="diagram ftw"></li>
+</ul>
+<p>Vim has different modes of operation and the shortcut keys may or may not act the same within each of those modes. I am refering to the &lsquo;insert&rsquo; mode for actually writing and the &rsquo;normal&rsquo; mode for all the trickery with the mnemonics.  This mode switching lends to the infamous confusion of &ldquo;How to exit vim!&rdquo;, because most of us we&rsquo;re used to get straight to the &ldquo;start typing&rdquo; mode when we launch a word editing program instead some limbo state waiting for the user to start deciding what mode they want to go into. So as one will, after starting vim, typically first wonder why can&rsquo;t they write anything and after getting to the &lsquo;insert&rsquo; mode - usually by accident
+after typing some additional character beyond individual keystrokes - it suddenly gets quite confusing: there&rsquo;s no menus and one needs to exit the &lsquo;insert&rsquo; mode before they can actually exit the vim.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1200/1*AD1e170YTJaiUBypv1H9Ow.jpeg" alt="Orly-ExitingVim"></p>
+<p>So how do you exit vim? Through the &lsquo;Command-line&rsquo; mode. That is the mode that let&rsquo;s one save files and exit among other things. &lsquo;Command-line&rsquo; mode is accessible from the &rsquo;normal&rsquo; mode by typing &lsquo;:&rsquo;.</p>
+<ul>
+<li>Another diagram with cli mode added</li>
+</ul>
+<p>Now would be a really good time to go to the &lsquo;Command-line&rsquo; mode and type in &lsquo;vimtutor&rsquo; and follow that. It is a built in tutorial that takes a beginner vimmer through these concepts in detail.</p>
+<ul>
+<li>diagram with &lsquo;vimtutor&rsquo; -&gt; great success</li>
+</ul>
+<p>There&rsquo;s a million tutorials in using vim, but they usually start with the concepts and introduce a bunch of details before getting to the basic core of the program. This was my take on introducing vim in a way, that a beginner could get to the basics as soon as possible, and work their way deeper from there on their own.</p>
+
+                <br>
+                
+                <p class="back-to-posts"><a href="/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com///github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="/about">Itu Rojunen</a> 2022 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+

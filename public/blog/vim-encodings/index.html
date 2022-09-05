@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Itu Rojunen">
+<meta name="description" content="There was some mysterious &lt;92&gt;, &lt;93&gt;, &lt;94&gt; and &lt;96&gt; tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn&rsquo;t stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal.">
+
+<meta property="og:title" content="Fixing Misencoded Characters with Vim" />
+<meta property="og:description" content="There was some mysterious &lt;92&gt;, &lt;93&gt;, &lt;94&gt; and &lt;96&gt; tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn&rsquo;t stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/vim-encodings/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2018-02-08T09:49:18+02:00" />
+<meta property="article:modified_time" content="2018-02-08T09:49:18+02:00" />
+
+
+
+<title>
+
+
+     Fixing Misencoded Characters with Vim 
+
+</title>
+<link rel="canonical" href="/blog/vim-encodings/">
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/running-ninja.jpg" srcset="img/running-ninja.jpg 1x"></a>
+            
+            <a href="/"><div class="name">Itu Rojunen</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="/"><span>Blog</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/d3rp" target="_blank" rel="noopener"><img class="icon" src="/img/github.svg" alt="github" /></a>
+        
+
+        
+
+        
+            <a href="//twitter.com/rojun_itu" target="_blank" rel="noopener"><img class="icon" src="/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Fixing Misencoded Characters with Vim
+
+</div>
+
+                    <div class="initials"><a href=""></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Thu Feb 8 2018 09:49:18 EET'>Feb 8, 2018</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>2 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>There was some mysterious &lt;92&gt;, &lt;93&gt;, &lt;94&gt; and &lt;96&gt; tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn&rsquo;t stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal. Frankly though, I should&rsquo;ve been given the file a few runs with <a href="https://linux.die.net/man/1/shred">shred</a> and thus sense a hint of closure with my past.</p>
+<p>What does one do when they need to figure out how to work with a command line or a curses based tool? Ask stackoverflow. Or rather, google for a readily available answer. I mean, why contribute to the infosharing by asking relevant questions or checking answers in the docs oneself? *cough* So in short, I found <a href="https://stackoverflow.com/a/2801132">the answer on stackoverflow</a>. However I found it after landing on atomic object&rsquo;s blog post about <a href="https://spin.atomicobject.com/2011/06/21/character-encoding-tricks-for-vim/">character encoding tricks for vim</a> that explains how to change
+encodings and check for character codes. It is as if I had learned this before, but something that I learned later pushed it away.. As if that was a thing.</p>
+<p>I usually validate the sed commands (that&rsquo;s what I call replacing in vim, because it basically is that) that I&rsquo;m about to use with using find.</p>
+<p>Finding &lt;92&gt; characters:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>/\%<span style="color:#a6e22e">x92</span></span></span></code></pre></div></p>
+<p>Replacing those characters with &lsquo;:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:%<span style="color:#a6e22e">s</span><span style="color:#e6db74">/\%x92/</span>&#39;/<span style="color:#a6e22e">g</span></span></span></code></pre></div></p>
+<p>Changing the encoding of the file after the changes to utf-8 (when in doubt, use <a href="https://en.wikipedia.org/wiki/UTF-8">utf-8</a>):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:<span style="color:#a6e22e">set</span> ++<span style="color:#a6e22e">enc</span>=<span style="color:#a6e22e">UTF</span><span style="color:#ae81ff">-8</span></span></span></code></pre></div></p>
+<p>ps. you can use undo after setting the encoding this way.</p>
+
+                <br>
+                
+                <p class="back-to-posts"><a href="/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com///github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="/about">Itu Rojunen</a> 2022 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="https://5min.ninja/blog/vim-file-browsing/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2018-02-06T22:45:48&#43;02:00" />
+    
+        <meta name="generator" content="Hugo 0.102.3" />
+
+        <title>File Exploration in Vim &middot; 5min ninja</title>
+        <link rel="canonical" href="https://5min.ninja/" />
+        <link rel="stylesheet" type="text/css" href="https://5min.ninja/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="https://5min.ninja/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="blog">
+	<header class="post-header">
+        <h1 class="p-post-title">File Exploration in Vim</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="https://5min.ninja//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2018-02-06T22:45:48&#43;02:00">February 6, 2018</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <p>Vim is a great text editor. There&rsquo;s a plethora of third party plugins to extend
+vim and help navigate file systems and also a heap of ways to use them. I&rsquo;m not
+sure, if it&rsquo;s common knowledge that vim has very nifty tricks up its sleeve for
+to tackle exploring the directory structures without additional plugins and
+opening up remote files using your beloved vim configuration. That is, if you
+are inclined to heavily configure your vim with or without plugins, then all
+that sweetness can be applied to editing files remotely instead of having to use
+some remote machine&rsquo;s vanilla vim.</p>
+<p>Here are some ways divided into two sections that I&rsquo;ve found useful. I&rsquo;ve
+divided them according to their use case, which are &ldquo;accessing local files&rdquo; and
+&ldquo;accessing remote files&rdquo;.</p>
+<h2 id="accessing-local-files">Accessing Local Files</h2>
+<p><strong>Plugins and External Tools</strong></p>
+<p>I use <a href="https://ranger.github.io/">ranger</a> and it felt really convenient for a
+long while to <a href="https://5min.ninja/blog/ranger-tmux/">split a pane in tmux from within ranger</a> when I wanted to edit a file and then hit
+<a href="https://kien.github.io/ctrlp.vim/">ctrl-p</a> when I wanted to navigate within
+that file&rsquo;s directory inside vim - which is basically what I often end up doing
+after editing the file in question.</p>
+<p>Ctrl-p refers to the shortcut used as well as the name of the plugin enabling a
+fuzzy search file exploration feature.  Hitting ctrl-p in vim with the plugin
+installed opens an interactive view that updates upon every typed key and
+pattern matches the written characters to the files recursively in the directory
+you&rsquo;re at. It also allows quick commands to open those files in different tabs
+etc. It is still in my toolbox, but I&rsquo;ve used it less and less as the time goes
+on.</p>
+<p>The main reason for my abandoning of this plugin is that it sometimes gets
+awkwardly stuck when there&rsquo;s too many files and folders to recurse into, and vim typically hangs
+until the find process is finished without accepting any keyboard input.</p>
+<p>Also having found netrw in vim made me steer towards using it for navigating
+instead of ctrl-p.</p>
+<p><strong>Netrw is in Vim by Default</strong></p>
+<p>George Ornbo showed a good alternative work flow to ctrl-p (or in fact
+<a href="https://github.com/scrooloose/nerdtree">nerdtree</a>) with using <a href="https://shapeshed.com/vim-netrw/#netrw-the-unloved-directory-browser">netrw instead of
+nerdtree</a>.
+This approach is intriguing as <strong>netrw is a stock plugin shipped with the
+default installation of vim</strong> and it seems to work pretty well for this kind of
+file navigation. The short summary of Ornbo&rsquo;s post is that netrw uses 3
+commands: <code>:explore</code>, <code>:Sexplore</code> and <code>:Vexplore</code> and netrw view can be
+toggled and configured to suit your taste. These commands open netrw in the
+current buffer (explore) or by splitting the window horizontally (Sexplore) or
+vertically (Vexplore).</p>
+<p>His blog post goes on to introduce a few nifty configuration tweaks to make the
+netrw a little more usable. Of these tweaks I found the most useful to be
+configuring netrw to show a tree view by default (<code>let g:netrw_liststyle = 3</code>).  After mapping some keys, for example <!-- raw HTML omitted -->x for explore etc. the work
+flow becomes quite intuitive when you want to open another file from the working
+directory.</p>
+<p>However, I&rsquo;ve explained what I feel is the most useful feature related to this
+in this post in the section below (Accessing Remote Files).</p>
+<p><strong>I Whip My Files Back and Forth..</strong></p>
+<p>There&rsquo;s also vim&rsquo;s basic file navigation features aside from netrw. Pressing
+<code>gf</code> when the cursor is over a file name - or a relative path - opens a file
+in the current working directory, if such a file can be found. This can be tested
+easily by &ldquo;cd&quot;ing into a directory with files, opening vim, running <code>:read !ls</code> - which pastes the output of <code>ls</code> in the current buffer - and placing
+the cursor on top of any of the files and pressing <code>gf</code>. This would open the
+file under the cursor in vim.</p>
+<p>Every opened file is shown in a buffer. Vim holds a list of previously opened
+<a href="https://romainl.github.io/the-patient-vimmer/2.html#_buffers">buffers</a>. Now if
+several files have been opened during the same vim session, they can be shuffled
+through back and forth by <code>Ctrl-i</code> and <code>Ctrl-o</code> (in the normal mode).
+There&rsquo;s actually more to these two keyboard shortcuts - they take you back to
+the exact position you jumped from regardless of if you moved inside the same
+file or between files. It is quite equivalent to the back and forward arrows inside
+most IDEs.</p>
+<p><code>:b &lt;Tab&gt;</code> (notice the space) iterates over the buffers by pressing tab
+completing their names (enter opens the buffer).</p>
+<p>Additionally, instead of going through buffers one-by-one, they can be enlisted
+with <code>:ls</code> which enumerates the list of buffers. To select and open any of these enlisted ones: <code>:b &lt;number&gt;&lt;enter&gt;</code>. These could be mapped together to show a list of buffers (i.e. like open files) and waiting for input for selecting the file to be edited by number:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:<span style="color:#a6e22e">map</span> &lt;<span style="color:#a6e22e">Leader</span>&gt;<span style="color:#a6e22e">B</span> :<span style="color:#a6e22e">ls</span>&lt;<span style="color:#a6e22e">CR</span>&gt;:<span style="color:#a6e22e">buffer</span> </span></span></code></pre></div></p>
+<p><strong>Quick Fixes</strong></p>
+<p>If you haven&rsquo;t tried <strong>vimgrep</strong> before, here&rsquo;s a quick tour. Vimgrep greps
+matching a pattern to the files like running grep would, but within vim. The
+biggest incentive to use this features over whipping open a terminal and using
+grep instead is that it creates an index of files with the search results that can be opened in another
+window. Then it is a breeze to go through through the search results and open
+the file that is of interest.. Try it out:</p>
+<p><code>:vimgrep /word/gj **/*.*</code></p>
+<p>After running that command, open the &ldquo;quick fix window&rdquo; i.e. the index with:</p>
+<p><code>:cwindow</code> or just <code>cwin</code></p>
+<p>The rest should be quite intuitive. Navigating through the list pressing enter
+on the shown line opens that file - placing the cursor on the line with the
+search result - in a new buffer. In the vimgrep command above, the &ldquo;word&rdquo; refers
+to the pattern and <code>**/*.*</code> to matching it to any files recursively from
+subfolders of the current working directory.</p>
+<p>Here are some more ways to handle files similarily to vimgrep from vim: <a href="https://web.archive.org/web/20170531234737/https://gist.github.com/ajh17/a8f5f194079818b99199">Compile, build and error check workflow</a></p>
+<p>If you have a vim compiled with the make-tag, you can use vim&rsquo;s automatic
+features to <a href="https://vim.fandom.com/wiki/Automatically_open_the_quickfix_window_on_:make">open cwindow and examine
+errors</a>
+that resulted when compiling.</p>
+<h2 id="accessing-remote-files">Accessing Remote Files</h2>
+<p>I mentioned netrw in the previous section. The biggest ergonomics factor in
+using netrw for me is that it works similarily for remote files as it does for
+local files. The added value? If you&rsquo;ve weaved yourself an elaborate web of vim
+plugins and configured your keybindings reducing the overhead(ache) liberating
+your text editing experience beyond the defaults thrown on you by a vanilla vim
+installation - and you want to have all that power at hand when accessing remote
+files - now you can.  This way you can edit the files as if they were on your
+machine by typing something like:</p>
+<p><code>vim scp://remote_host/</code></p>
+<p>In effect, vim handles copying the file from the remote machine to your local
+location and after saving the edits it will copy it back
+So how can we make this happen? For convenience, lets make some changes to the
+ssh configurations dealing with resolving the host. I think this plays a major part
+in making the work flow ergonomic for those remote edits.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e"># file: ~/.ssh/config</span>
+</span></span><span style="display:flex;"><span>Host my_remote_server       <span style="color:#75715e"># a symbolic name of your choice</span>
+</span></span><span style="display:flex;"><span>  Hostname server_IP_or_DNS <span style="color:#75715e"># the server URI</span>
+</span></span><span style="display:flex;"><span>  User username             <span style="color:#75715e"># the username for the server</span>
+</span></span><span style="display:flex;"><span>  IdentityFile ~/.ssh/a_suitable_ssh_key_if_any <span style="color:#75715e"># key for authentication</span>
+</span></span><span style="display:flex;"><span> </span></span></code></pre></div>
+<p>So for example:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>Host HAL
+</span></span><span style="display:flex;"><span>  Hostname 10.10.1.2
+</span></span><span style="display:flex;"><span>  User dave
+</span></span><span style="display:flex;"><span>  IdentityFile ~/.ssh/id_rsa</span></span></code></pre></div></p>
+<p>After configuring the ssh hosts as shown above, netrw is able to handle
+navigating directories and files, when we use vim over ssh thusly:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim scp://HAL/filename</span></span></code></pre></div>
+( source: <a href="https://unix.stackexchange.com/questions/315844/editing-and-compiling-files-on-a-remote-server-with-vim">stackexchange</a> )</p>
+<p>What should open before your eyes is the file imaginatively named &lsquo;filename&rsquo;
+located on the remote host, in your (remote) user&rsquo;s <strong>home directory</strong> - in this
+example&rsquo;s case the user is &ldquo;dave&rdquo;.</p>
+<p>As netrw works like a file browser in a terminal, it&rsquo;s possible to leverage it
+to show the root of your home directory on the remote host as a file tree with
+just:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim scp://my_remote_server/</span></span></code></pre></div></p>
+<p>If vim configuration included <code>let g:netrw_liststyle = 3</code>, then the browsing
+view will be one refering to a tree view.</p>
+<p>Here lies rendered a more complete version of this command, which in this case
+would use an absolute path - hence the double slashes before the path:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>vim scp://username@server_IP_or_DNS<span style="color:#f92672">[</span>:port<span style="color:#f92672">]</span>//absolute_path/to/file.cpp</span></span></code></pre></div></p>
+<p>As a last warning, note that the slashes in the scp-path have a confounding
+syntax and might waste your time troubleshooting the issue. Here is some
+tongue-in-cheek passage to explain why the slashes matter:</p>
+<p>Let us conjure some imagery to address this potential side effect: All is well
+in the kingdom, but then - on some unsuspecting moment - vim comes back at you
+with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>netrw<span style="color:#f92672">)</span> not a netrw-style url; netrw uses protocol://<span style="color:#f92672">[</span>user@hostname<span style="color:#f92672">[</span>:port<span style="color:#f92672">]</span>/<span style="color:#f92672">[</span>path<span style="color:#f92672">]</span></span></span></code></pre></div>
+<p>&ldquo;Oh you, vim..&rdquo;, you chuckle, as this harmless looking oneliner fails to waver
+your intentions of connecting remotely.</p>
+<p>Determined that the written path was perfectly adequate, you wait for the
+netrw&rsquo;s file view to open - an alluring moment that persists beyond frustration
+as the awaited tree view never presents itself - and so the error report begs for a closer
+inspection.. And soon it provokes a double-take when the word &ldquo;protocol&rdquo; permeates
+your dubious consciousness. After verifying the ssh configurations, port
+numbers, vimrc lines and all other minute details that might have taken the
+wrong typo, you&rsquo;ll realize what I&rsquo;ve learned repeatedly upon making this same
+mistake..</p>
+<p>In short, check that the host name ends in a slash &lsquo;/&rsquo;.</p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=File%20Exploration%20in%20Vim&url=https%3a%2f%2f5min.ninja%2fblog%2fvim-file-browsing%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2f5min.ninja%2fblog%2fvim-file-browsing%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2f5min.ninja%2fblog%2fvim-file-browsing%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+            	<span class="f-post-tags"><i class="fa fa-tag"></i>
+            	vim, netrw, nerdtree, file explorer
+            	</span>
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = '5min-ninja';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com///github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="https://5min.ninja/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="https://5min.ninja//about">Itu Rojunen</a> 2022 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://5min.ninja/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>

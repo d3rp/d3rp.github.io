@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on 5min ninja</title>
+    <link>https://5min.ninja/blog/</link>
+    <description>Recent content in Blogs on 5min ninja</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 15 Feb 2018 20:26:38 +0200</lastBuildDate><atom:link href="https://5min.ninja/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TMUX Heart Ranger</title>
+      <link>https://5min.ninja/blog/ranger-tmux/</link>
+      <pubDate>Thu, 15 Feb 2018 20:26:38 +0200</pubDate>
+      
+      <guid>https://5min.ninja/blog/ranger-tmux/</guid>
+      <description>Ranger is a console based file explorer that uses vim bindings. This makes it a very intuitive choice for any vimmer when they&amp;rsquo;re looking for a file explorer. I also use tmux and was wondering, if instead of replacing the whole ranger view upon editing a file, I could open them up in a newly split tmux pane. Here&amp;rsquo;s a quick snippet to configure splitting a tmux window into panes from within ranger.</description>
+    </item>
+    
+    <item>
+      <title>File Exploration in Vim</title>
+      <link>https://5min.ninja/blog/vim-file-browsing/</link>
+      <pubDate>Tue, 06 Feb 2018 22:45:48 +0200</pubDate>
+      
+      <guid>https://5min.ninja/blog/vim-file-browsing/</guid>
+      <description>Vim is a great text editor. There&amp;rsquo;s a plethora of third party plugins to extend vim and help navigate file systems and also a heap of ways to use them. I&amp;rsquo;m not sure, if it&amp;rsquo;s common knowledge that vim has very nifty tricks up its sleeve for to tackle exploring the directory structures without additional plugins and opening up remote files using your beloved vim configuration. That is, if you are inclined to heavily configure your vim with or without plugins, then all that sweetness can be applied to editing files remotely instead of having to use some remote machine&amp;rsquo;s vanilla vim.</description>
+    </item>
+    
+  </channel>
+</rss>

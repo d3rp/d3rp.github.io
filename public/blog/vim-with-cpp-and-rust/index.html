@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Itu Rojunen">
+<meta name="description" content="vim plugins: dein - plugin installer deoplete - language completion (from the maker of dein) vim-syntastic - error reporting a.k.a linting easy-tags - (Wraul&rsquo;s fork) Tag completion and jumping to definitions tagbar - structure view of the file
+C&#43;&#43;: deoplete-clang - clang integration for deoplete (c&#43;&#43;) derekwyatt/vim-fswitch - switching between header and implementation file Rust: LanguageClient - LSP client for reference documentation rust.vim - rust syntax and completion linux packages: excuberant-ctags - tags a.">
+
+<meta property="og:title" content="Vim With Cpp and Rust" />
+<meta property="og:description" content="vim plugins: dein - plugin installer deoplete - language completion (from the maker of dein) vim-syntastic - error reporting a.k.a linting easy-tags - (Wraul&rsquo;s fork) Tag completion and jumping to definitions tagbar - structure view of the file
+C&#43;&#43;: deoplete-clang - clang integration for deoplete (c&#43;&#43;) derekwyatt/vim-fswitch - switching between header and implementation file Rust: LanguageClient - LSP client for reference documentation rust.vim - rust syntax and completion linux packages: excuberant-ctags - tags a." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/vim-with-cpp-and-rust/" /><meta property="article:section" content="blog" />
+<meta property="article:published_time" content="2021-01-30T20:36:42+02:00" />
+<meta property="article:modified_time" content="2021-01-30T20:36:42+02:00" />
+
+
+
+<title>
+
+
+     Vim With Cpp and Rust 
+
+</title>
+<link rel="canonical" href="/blog/vim-with-cpp-and-rust/">
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/pygments.css">
+    <link rel="stylesheet" href="/css/main.css">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/favicon.ico"
+
+>
+
+
+
+
+
+
+
+
+</head>
+
+
+<body lang="">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                
+                <a href="/"><img class="avatar" src="/img/running-ninja.jpg" srcset="img/running-ninja.jpg 1x"></a>
+            
+            <a href="/"><div class="name">Itu Rojunen</div></a>
+            
+            <nav>
+                <ul>
+                    
+                        <li class="nav-blog"><a href="/"><span>Blog</span></a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+        
+            <a href="//github.com/d3rp" target="_blank" rel="noopener"><img class="icon" src="/img/github.svg" alt="github" /></a>
+        
+
+        
+
+        
+            <a href="//twitter.com/rojun_itu" target="_blank" rel="noopener"><img class="icon" src="/img/twitter.svg" alt="twitter" /></a>
+        
+
+	
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Vim With Cpp and Rust
+
+</div>
+
+                    <div class="initials"><a href=""></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Sat Jan 30 2021 20:36:42 EET'>Jan 30, 2021</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>One minute read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                <p>vim plugins:
+dein - plugin installer
+deoplete - language completion (from the maker of dein)
+vim-syntastic - error reporting a.k.a linting
+easy-tags - (Wraul&rsquo;s fork) Tag completion and jumping to definitions
+tagbar - structure view of the file</p>
+<pre><code>C++:
+    deoplete-clang - clang integration for deoplete (c++)
+    derekwyatt/vim-fswitch - switching between header and implementation file
+    
+Rust:
+    LanguageClient - LSP client for reference documentation
+    rust.vim - rust syntax and completion
+</code></pre>
+<p>linux packages:
+excuberant-ctags - tags a.k.a. symbols for completion</p>
+<p>deoplete should do autocomplete without having to trigger it manually and with
+ctags you should get those project wide symbols included.</p>
+<p>LSP is a protocol, in which the compiler and some other magic is used to verify
+and thus suggest things in real time. The plugin hooks vim as a client to a
+running LSP server.</p>
+<p>YCM gave me so many headaches with updates and some other issues that I started
+looking for alternatives. I replaced it with deoplete.</p>
+<p>links
+rust
+rust.vim, syntastic and tagbar - <a href="https://github.com/rust-lang/rust.vim">https://github.com/rust-lang/rust.vim</a></p>
+<p>c++
+deoplete-clang - <a href="https://github.com/deoplete-plugins/deoplete-clang">https://github.com/deoplete-plugins/deoplete-clang</a></p>
+
+                <br>
+                
+                <p class="back-to-posts"><a href="/blog">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com///github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="/about">Itu Rojunen</a> 2022 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+

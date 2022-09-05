@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="https://5min.ninja/blog/ranger-tmux/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2018-02-15T20:26:38&#43;02:00" />
+    
+        <meta name="generator" content="Hugo 0.102.3" />
+
+        <title>TMUX Heart Ranger &middot; 5min ninja</title>
+        <link rel="canonical" href="https://5min.ninja/" />
+        <link rel="stylesheet" type="text/css" href="https://5min.ninja/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="https://5min.ninja/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="blog">
+	<header class="post-header">
+        <h1 class="p-post-title">TMUX Heart Ranger</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="https://5min.ninja//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2018-02-15T20:26:38&#43;02:00">February 15, 2018</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <p><a href="https://github.com/ranger/ranger">Ranger</a> is a console based file explorer that
+uses vim bindings. This makes it a very intuitive choice for any vimmer when
+they&rsquo;re looking for a file explorer. I also use tmux and was wondering, if
+instead of replacing the whole ranger view upon editing a file, I could open
+them up in a newly split tmux pane. Here&rsquo;s a quick snippet to configure
+splitting a tmux window into panes from within ranger.</p>
+<p>Add to the <code>~/.config/ranger/rc.conf</code>:</p>
+<pre tabindex="0"><code class="language-ranger" data-lang="ranger">map eh eval if &#39;TMUX&#39; in os.environ: fm.execute_console(&#34;shell tmux splitw -h &#39;vim &#34; + fm.thisfile.basename + &#34;&#39;&#34;)
+map ev eval if &#39;TMUX&#39; in os.environ: fm.execute_console(&#34;shell tmux splitw -v &#39;vim &#34; + fm.thisfile.basename + &#34;&#39;&#34;)
+map es eval if &#39;TMUX&#39; in os.environ: fm.execute_console(&#34;shell tmux splitw -v -c $PWD&#34;)
+map eS eval if &#39;TMUX&#39; in os.environ: fm.execute_console(&#34;shell tmux splitw -h -c $PWD&#34;)</code></pre>
+<p>Now navigating onto a file in ranger (having of course started it inside tmux)
+and pressing <code>e</code> opens a menu to select between <code>h, v, s, S</code>. These
+consecutive choices will split the view into panes</p>
+<ul>
+<li>(h)orizontally opening the file in vim</li>
+<li>(v)ertically opening the file in vim</li>
+<li>(s)hell in the working directory splitting pane horizontally</li>
+<li>(S)hell in the working directory splitting pane vertically</li>
+</ul>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=TMUX%20Heart%20Ranger&url=https%3a%2f%2f5min.ninja%2fblog%2franger-tmux%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2f5min.ninja%2fblog%2franger-tmux%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=https%3a%2f%2f5min.ninja%2fblog%2franger-tmux%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                
+        <section id="comments">
+            <div id="disqus_thread" class="post-comments"></div>
+            <script type="text/javascript">
+              if (window.location.hostname != "localhost") {
+                var disqus_shortname = '5min-ninja';
+                (function() {
+                  var dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              }
+            </script>
+            <noscript>
+              Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+        </section>
+                
+    </footer>
+</article>
+
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com///github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="https://5min.ninja/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="https://5min.ninja//about">Itu Rojunen</a> 2022 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://5min.ninja/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
