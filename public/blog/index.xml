@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on 5min ninja</title>
+    <title>A blog on 5min ninja</title>
     <link>https://5min.ninja/blog/</link>
-    <description>Recent content in Blogs on 5min ninja</description>
+    <description>Recent content in A blog on 5min ninja</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 15 Feb 2018 20:26:38 +0200</lastBuildDate><atom:link href="https://5min.ninja/blog/index.xml" rel="self" type="application/rss+xml" />
