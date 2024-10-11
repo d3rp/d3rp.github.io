@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="http://localhost:1313/cpp-forward-settings/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2021-01-30T20:14:30&#43;02:00" />
+    
+        <meta name="generator" content="Hugo 0.135.0">
+
+        <title>Intuitive settings class from cpr in C&#43;&#43; &middot; 5min ninja</title>
+        <link rel="canonical" href="http://localhost:1313/" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="http://localhost:1313/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="page">
+	<header class="post-header">
+        <h1 class="p-post-title">Intuitive settings class from cpr in C&#43;&#43;</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="http://localhost:1313//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2021-01-30T20:14:30&#43;02:00">January 30, 2021</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <p>tl;dr: How to fight the formation of spaghetti code, when designing a configuration/settings
+class, and make it feel intuitive.</p>
+<p>I was toying around with my hobby project and came across a wrapper library for
+libcurl. At first I was a little annoyed with its SSL handling and its seemingly
+complicated way of setting it up. As I figured out how the configuration parameters
+were supposed to be inserted in order to get things going, its ways seemed actually
+pretty useful. Also I noticed, that apparently there&rsquo;s such a thing as a variadic
+std::forward.</p>
+<p>A little context before digging deeper into this. What we have here,
+is a Settings-class, that can be configured in various ways. The concrete
+examples shown below are toy examples, but what I was most excited about was how you could
+instanciate and control the options on the &ldquo;client side&rdquo; of the code without too
+much messyness - and still provide an intuitive way to lay out the options for
+that Settings-object. In other words, it allowed a lot of control over the
+option configurations while remaining reasonably simple to use and without
+being too complicated to maintain.</p>
+<p>For example, if we have a Settings-object with some context, we can set it up
+with the use of some instanciated classes acting as options (here <code>Foo</code> and
+<code>Bar</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Settings <span style="color:#a6e22e">s</span>(Foo(), Bar());</span></span></code></pre></div>
+<p>This allows to configure those options quite freely by using their
+initialization logic as we could configure <code>Foo()</code> in many ways and passing
+the instance to the <code>Settings s</code>.</p>
+<p>In order to get this going create a Settings class:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Settings</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string ctx
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Just to make this as simple as it needs to be in order to see its potential,
+let&rsquo;s have an option object with some context that we use to manipulate the
+Settings&rsquo; context:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Option</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string word <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;default &#34;</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Then adjust Settings class to use that &ldquo;word&rdquo; that was
+defined above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Settings</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string ctx;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_option</span>(Option<span style="color:#f92672">&amp;&amp;</span> option)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ctx <span style="color:#f92672">+=</span> option.word;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Lets start with the metaprogramming by creating a getter function, which
+takes the instanciated options, creates a Settings object and uses the options
+by passing them through the &ldquo;set_options pipeline&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span>... Ts<span style="color:#f92672">&gt;</span>                               <span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Settings get(Ts<span style="color:#f92672">&amp;&amp;</span>... options)                           <span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span>    Settings s;
+</span></span><span style="display:flex;"><span>    priv<span style="color:#f92672">::</span>set_options(s, std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>Ts<span style="color:#f92672">&gt;</span>(options)...); <span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>// 1
+Collecting all typenames - variadic typenames - with &ldquo;typename&hellip;&rdquo;.</p>
+<p>// 2
+Ts&amp;&amp;&hellip; - variadic move reference meaning there&rsquo;s one or more of &ldquo;options&rdquo; and
+they can be of different types, because of the variadic typenames.</p>
+<p>// 3
+Using a priv namespace for convenience. Passing the newly created Settings
+object and forwarding all of the options with <code>std::forward&lt;Ts&gt;(options)...</code>.
+This had a few surprising features.</p>
+<ul>
+<li>
+<p>First, the forward allows types to be
+infered i.e. in the end the implementation can take into account just one base
+level interface (&ldquo;Option&rdquo;) when the object is forwarded.</p>
+</li>
+<li>
+<p>Second, the syntax for this variadic pass through is
+not all that obvious - &ldquo;options&rdquo; is an initializer list, for which the types are
+collected in Ts and paired with the variadic &ldquo;&hellip;&rdquo; notation.</p>
+</li>
+</ul>
+<p>Next let&rsquo;s define the last missing piece in order to glue the
+Settings.set_option and the getter. Here we&rsquo;ll use something I like to think as
+recursive metaprogramming. I call it that, as we&rsquo;ll define a base case <code>template &lt;typename T&gt;</code> and supplement that with a <code>template &lt;typename T, typename... Ts&gt;</code>.
+And in this second step we snatch the first typename as a single T and the
+remaining once with <code>... Ts</code> hence using the preprocessor for a recursion.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> priv {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>                           <span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">void</span> set_option(Settings<span style="color:#f92672">&amp;</span> s, T<span style="color:#f92672">&amp;&amp;</span> t)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        s.set_option(std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>t<span style="color:#f92672">&gt;</span>(t));           <span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T, <span style="color:#66d9ef">typename</span>... Ts<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> set_option(Settings<span style="color:#f92672">&amp;</span> s, T<span style="color:#f92672">&amp;&amp;</span> t, Ts<span style="color:#f92672">&amp;&amp;</span>... ts) <span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>        set_option(s, std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(t));
+</span></span><span style="display:flex;"><span>        set_option(s, std<span style="color:#f92672">::</span>forward<span style="color:#f92672">&lt;</span>Ts<span style="color:#f92672">&gt;</span>(ts)...);     <span style="color:#75715e">// 4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>// 1
+Base case. When there&rsquo;s a call for set_option(s, t), this is used. There&rsquo;s
+such a call before // 4.</p>
+<p>// 2
+Here we use the <code>Settings.set_option(...)</code> we defined earlier. This is the
+main piece of glue. All the other metaprogramming tricks shown here are there to
+funnel one option at a time into this call.</p>
+<p>// 3
+Important to collect first T alone and collect the remaining ones in Ts.
+Again, in order to funnel a T at a time to <code>set_option(s, t)</code></p>
+<p>// 4
+The remaining <code>Ts</code> are looped back (recursive) into // 3 thus separating
+the first T and collecting the others into Ts. Like with recursive functions,
+this continues until there&rsquo;s nothing left for Ts in which case only // 1 is
+called.</p>
+<p>There you have it. Now to complete this, we can make other options and a main
+function to try them out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Foo</span> <span style="color:#f92672">:</span> Option             <span style="color:#75715e">// 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span>    Foo() <span style="color:#f92672">:</span> Option(<span style="color:#e6db74">&#34;foo &#34;</span>) {};  <span style="color:#75715e">// 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Bar</span> <span style="color:#f92672">:</span> Option
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Bar() <span style="color:#f92672">:</span> Option(<span style="color:#e6db74">&#34;bar &#34;</span>) {};
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Settings s(Foo(), Bar());   <span style="color:#75715e">// 3
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> s.ctx <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>; <span style="color:#75715e">// 4
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}</span></span></code></pre></div>
+<p>// 1
+Like I mentioned earlier, <code>std::forward&lt;T&gt;(t)</code> and <code>T&amp;&amp; t</code> allows to pass
+through infered types from <code>Option</code>.</p>
+<p>// 2
+Just for the sake of demonstrating this, the <code>Option</code> had a field named
+<code>word</code>, that we concatenated to <code>Settings.ctx</code>. As we&rsquo;ve used structs, we can
+just define the field to simulate this options-manipulating-settings-object
+behaviour.</p>
+<p>// 3
+This is what intrigues me: if we had more elaborate options and
+configuration options for settings, here we could define them when instantiating
+<code>Foo</code> and <code>Bar</code>. There&rsquo;s no need to mangle multiple definitions and have a
+trickle down if-else labyrinths in some manager, but instead define the logic in
+the options themselves, and open up the user side of the code here - as the
+CTOR.</p>
+<p>// 4
+Printing the wonderful results of this experiment. It should read now: &ldquo;foo
+bar&rdquo;</p>
+<p>This is to demonstrate, that we did in fact pass the <code>Foo</code> and <code>Bar</code> to the
+<code>Settings</code> object, which &ldquo;used them to set up itself&rdquo;. While passing through the
+Options, the metaprogramming resolved the types according to the Options.</p>
+<p>I&rsquo;m happy if you&rsquo;ve endured my ramblings this far, because thus far this hasn&rsquo;t
+been a major deal. The settings class demonstrated here within doesn&rsquo;t deviate
+much from any other class, that uses an interface as the type in the parameters
+to use inherited features. However, this pattern is nice, because aside from
+that it lends to individual classes to be used as well, that can be all unique.</p>
+<p>For this last extension, let&rsquo;s consider we have individual classes such as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bar</span>;</span></span></code></pre></div>
+<p>And these don&rsquo;t inherit from anything. Just for the sake of an example, imagine
+those have implementations such as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Foo</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Foo(std<span style="color:#f92672">::</span>string name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;shady&#34;</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Chiki Chiki slim &#34;</span> <span style="color:#f92672">&lt;&lt;</span> name <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Then we can use parameter overloading to configure all the cases for settings
+as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Settings</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>string ctx;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_option</span>(Foo option)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_option</span>(Bar option)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div>
+<p>Now, it didn&rsquo;t do much in this example, but I feel this can lead to cleaner code
+when using this pattern.  Such a settings class could have been configured with
+the use of for example Enums. However, I&rsquo;ve found that that often trickles down
+to an if-else spaghetti part - maybe a manager or a factory - and the
+cleanliness of the code lies on the good-will of the developer next in line to
+make changes to the code - and not everyone feels like a boy-scout when in a
+hurry. In contrary to that, here we use metaprogramming to help a little with
+the process, as this enforces defining every option in their own class and every
+set_option variation in their own overriding method.</p>
+<p>My inspiration for this was cpr library for wrapping libcurl in C++
+<a href="https://github.com/whoshuu/cpr">https://github.com/whoshuu/cpr</a> . More specifically, the <code>cpr::Get(...)</code> uses
+this pattern.</p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Intuitive%20settings%20class%20from%20cpr%20in%20C%2b%2b&url=http%3a%2f%2flocalhost%3a1313%2fcpp-forward-settings%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fcpp-forward-settings%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2flocalhost%3a1313%2fcpp-forward-settings%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                        
+    </footer>
+</article>
+
+        pity the fool
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="http://localhost:1313/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="http://localhost:1313//about">Itu Rojunen</a> 2023 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="http://localhost:1313/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>

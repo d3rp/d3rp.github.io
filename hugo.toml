@@ -5,29 +5,34 @@ theme           = ["igoyak", "detox"]
 contentdir      = "content"
 publishdir      = "public"
 pygmentsStyle    = "monokai"
-canonifyurls    = true
+canonifyURLs    = true
 highlight       = true
 
 [taxonomies]
-  tag           = "tags"
-  category      = "categories"
-  series        = "series"
+tag           = "tags"
+category      = "categories"
+series        = "series"
 
+#[[menu.main]]
+#name            = "Blog"
+#weight          = -40
+#identifier      = "blog"
+#url             = "/blog/"
 [[menu.main]]
-name            = "Blog"
-weight          = -120
-identifier      = "blog"
-url             = "/"
+name            = "About"
+weight          = 20
+identifier      = "about"
+url             = "/about"
 
 [params]
-github          = "github.com/d3rp"
+github          = "d3rp"
 twitter         = "twitter.com/rojun_itu"
 avatar          = "img/running-ninja.jpg"
 author          = "Itu Rojunen"
-year            = "2022"
+year            = "2023"
 
 [security.funcs]
 getenv          = ['^HUGO_', '^WC_']
 [security.exec]
-allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^rst2html.py$']
+allow = ['^dart-sass-embedded$', '^go$', '^npx$', '^postcss$', '^rst2html$']
 osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$']

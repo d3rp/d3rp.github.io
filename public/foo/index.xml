@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Foos on 5min ninja</title>
+    <link>http://localhost:1313/foo/</link>
+    <description>Recent content in Foos on 5min ninja</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 15 Feb 2018 20:26:38 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/foo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TMUX Heart Ranger</title>
+      <link>http://localhost:1313/foo/ranger-tmux/</link>
+      <pubDate>Thu, 15 Feb 2018 20:26:38 +0200</pubDate>
+      <guid>http://localhost:1313/foo/ranger-tmux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ranger/ranger&#34;&gt;Ranger&lt;/a&gt; is a console based file explorer that&#xA;uses vim bindings. This makes it a very intuitive choice for any vimmer when&#xA;they&amp;rsquo;re looking for a file explorer. I also use tmux and was wondering, if&#xA;instead of replacing the whole ranger view upon editing a file, I could open&#xA;them up in a newly split tmux pane. Here&amp;rsquo;s a quick snippet to configure&#xA;splitting a tmux window into panes from within ranger.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

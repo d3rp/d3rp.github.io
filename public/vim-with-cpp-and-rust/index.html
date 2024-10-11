@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="http://localhost:1313/vim-with-cpp-and-rust/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2021-01-30T20:36:42&#43;02:00" />
+    
+        <meta name="generator" content="Hugo 0.135.0">
+
+        <title>Vim With Cpp and Rust &middot; 5min ninja</title>
+        <link rel="canonical" href="http://localhost:1313/" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="http://localhost:1313/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="page">
+	<header class="post-header">
+        <h1 class="p-post-title">Vim With Cpp and Rust</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="http://localhost:1313//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2021-01-30T20:36:42&#43;02:00">January 30, 2021</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <p>vim plugins:
+dein - plugin installer
+deoplete - language completion (from the maker of dein)
+vim-syntastic - error reporting a.k.a linting
+easy-tags - (Wraul&rsquo;s fork) Tag completion and jumping to definitions
+tagbar - structure view of the file</p>
+<pre><code>C++:
+    deoplete-clang - clang integration for deoplete (c++)
+    derekwyatt/vim-fswitch - switching between header and implementation file
+    
+Rust:
+    LanguageClient - LSP client for reference documentation
+    rust.vim - rust syntax and completion
+</code></pre>
+<p>linux packages:
+excuberant-ctags - tags a.k.a. symbols for completion</p>
+<p>deoplete should do autocomplete without having to trigger it manually and with
+ctags you should get those project wide symbols included.</p>
+<p>LSP is a protocol, in which the compiler and some other magic is used to verify
+and thus suggest things in real time. The plugin hooks vim as a client to a
+running LSP server.</p>
+<p>YCM gave me so many headaches with updates and some other issues that I started
+looking for alternatives. I replaced it with deoplete.</p>
+<p>links
+rust
+rust.vim, syntastic and tagbar - <a href="https://github.com/rust-lang/rust.vim">https://github.com/rust-lang/rust.vim</a></p>
+<p>c++
+deoplete-clang - <a href="https://github.com/deoplete-plugins/deoplete-clang">https://github.com/deoplete-plugins/deoplete-clang</a></p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Vim%20With%20Cpp%20and%20Rust&url=http%3a%2f%2flocalhost%3a1313%2fvim-with-cpp-and-rust%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fvim-with-cpp-and-rust%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2flocalhost%3a1313%2fvim-with-cpp-and-rust%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                        
+    </footer>
+</article>
+
+        pity the fool
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="http://localhost:1313/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="http://localhost:1313//about">Itu Rojunen</a> 2023 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="http://localhost:1313/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>

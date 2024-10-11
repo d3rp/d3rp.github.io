@@ -2,39 +2,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>5min ninja</title>
-    <link>https://5min.ninja/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on 5min ninja</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Feb 2018 20:26:38 +0200</lastBuildDate><atom:link href="https://5min.ninja/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 Feb 2021 19:21:36 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Have a Merry Devops Position</title>
+      <link>http://localhost:1313/blog/have-a-merry-devops-position/</link>
+      <pubDate>Tue, 02 Feb 2021 19:21:36 +0200</pubDate>
+      <guid>http://localhost:1313/blog/have-a-merry-devops-position/</guid>
+      <description>&lt;p&gt;I went on stackoverflow to look for an answer to how to fix &amp;ldquo;X&amp;rdquo; in my dockerized&#xA;instance running a build framework - a CI system if you will. What I found was&#xA;not an answer, but instead a link to another site with which I was implied to&#xA;stop searching for answers on stackoverflow. It felt surprisingly like a splash&#xA;of cold water against my face - don&amp;rsquo;t ask me why, I fathom not how to verbalize&#xA;it. The page I landed on told me to look from a newly founded subdomain:&#xA;devops.stackexchange.com&amp;hellip;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vim With Cpp and Rust</title>
+      <link>http://localhost:1313/blog/vim-with-cpp-and-rust/</link>
+      <pubDate>Sat, 30 Jan 2021 20:36:42 +0200</pubDate>
+      <guid>http://localhost:1313/blog/vim-with-cpp-and-rust/</guid>
+      <description>&lt;p&gt;vim plugins:&#xA;dein - plugin installer&#xA;deoplete - language completion (from the maker of dein)&#xA;vim-syntastic - error reporting a.k.a linting&#xA;easy-tags - (Wraul&amp;rsquo;s fork) Tag completion and jumping to definitions&#xA;tagbar - structure view of the file&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;C++:&#xA;    deoplete-clang - clang integration for deoplete (c++)&#xA;    derekwyatt/vim-fswitch - switching between header and implementation file&#xA;    &#xA;Rust:&#xA;    LanguageClient - LSP client for reference documentation&#xA;    rust.vim - rust syntax and completion&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;linux packages:&#xA;excuberant-ctags - tags a.k.a. symbols for completion&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Intuitive settings class from cpr in C&#43;&#43;</title>
+      <link>http://localhost:1313/blog/cpp-forward-settings/</link>
+      <pubDate>Sat, 30 Jan 2021 20:14:30 +0200</pubDate>
+      <guid>http://localhost:1313/blog/cpp-forward-settings/</guid>
+      <description>&lt;p&gt;tl;dr: How to fight the formation of spaghetti code, when designing a configuration/settings&#xA;class, and make it feel intuitive.&lt;/p&gt;&#xA;&lt;p&gt;I was toying around with my hobby project and came across a wrapper library for&#xA;libcurl. At first I was a little annoyed with its SSL handling and its seemingly&#xA;complicated way of setting it up. As I figured out how the configuration parameters&#xA;were supposed to be inserted in order to get things going, its ways seemed actually&#xA;pretty useful. Also I noticed, that apparently there&amp;rsquo;s such a thing as a variadic&#xA;std::forward.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vim in 2 Minutes</title>
+      <link>http://localhost:1313/blog/start-vim/</link>
+      <pubDate>Mon, 26 Mar 2018 20:19:59 +0300</pubDate>
+      <guid>http://localhost:1313/blog/start-vim/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;Record desktop with screenkey on. Write a bunch of dada with &amp;ldquo;quotes&amp;rdquo; and &amp;ldquo;we&amp;rsquo;re in insert mode&amp;rdquo; using the mnemonics mentioned here.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Think quick: what do these acronyms stand for?&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;rtfm&lt;/li&gt;&#xA;&lt;li&gt;irl&lt;/li&gt;&#xA;&lt;li&gt;tl;dr:&lt;/li&gt;&#xA;&lt;li&gt;lol&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Did you by any chance voice these out silently as full words instead of the initials the acronyms are constructed from? The idea behind the key shortcuts of vim is that every action is a mnemonic of a sequence of keystrokes instead of conjointly pressed keys:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>TMUX Heart Ranger</title>
-      <link>https://5min.ninja/blog/ranger-tmux/</link>
+      <link>http://localhost:1313/foo/ranger-tmux/</link>
       <pubDate>Thu, 15 Feb 2018 20:26:38 +0200</pubDate>
-      
-      <guid>https://5min.ninja/blog/ranger-tmux/</guid>
-      <description>Ranger is a console based file explorer that uses vim bindings. This makes it a very intuitive choice for any vimmer when they&amp;rsquo;re looking for a file explorer. I also use tmux and was wondering, if instead of replacing the whole ranger view upon editing a file, I could open them up in a newly split tmux pane. Here&amp;rsquo;s a quick snippet to configure splitting a tmux window into panes from within ranger.</description>
+      <guid>http://localhost:1313/foo/ranger-tmux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ranger/ranger&#34;&gt;Ranger&lt;/a&gt; is a console based file explorer that&#xA;uses vim bindings. This makes it a very intuitive choice for any vimmer when&#xA;they&amp;rsquo;re looking for a file explorer. I also use tmux and was wondering, if&#xA;instead of replacing the whole ranger view upon editing a file, I could open&#xA;them up in a newly split tmux pane. Here&amp;rsquo;s a quick snippet to configure&#xA;splitting a tmux window into panes from within ranger.&lt;/p&gt;</description>
     </item>
-    
+    <item>
+      <title>TMUX Heart Ranger</title>
+      <link>http://localhost:1313/ranger-tmux/</link>
+      <pubDate>Thu, 15 Feb 2018 20:26:38 +0200</pubDate>
+      <guid>http://localhost:1313/ranger-tmux/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/ranger/ranger&#34;&gt;Ranger&lt;/a&gt; is a console based file explorer that&#xA;uses vim bindings. This makes it a very intuitive choice for any vimmer when&#xA;they&amp;rsquo;re looking for a file explorer. I also use tmux and was wondering, if&#xA;instead of replacing the whole ranger view upon editing a file, I could open&#xA;them up in a newly split tmux pane. Here&amp;rsquo;s a quick snippet to configure&#xA;splitting a tmux window into panes from within ranger.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Fixing Misencoded Characters with Vim</title>
+      <link>http://localhost:1313/blog/vim-encodings/</link>
+      <pubDate>Thu, 08 Feb 2018 09:49:18 +0200</pubDate>
+      <guid>http://localhost:1313/blog/vim-encodings/</guid>
+      <description>&lt;p&gt;There was some mysterious &amp;lt;92&amp;gt;, &amp;lt;93&amp;gt;, &amp;lt;94&amp;gt; and &amp;lt;96&amp;gt; tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn&amp;rsquo;t stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal. Frankly though, I should&amp;rsquo;ve been given the file a few runs with &lt;a href=&#34;https://linux.die.net/man/1/shred&#34;&gt;shred&lt;/a&gt; and thus sense a hint of closure with my past.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>File Exploration in Vim</title>
-      <link>https://5min.ninja/blog/vim-file-browsing/</link>
+      <link>http://localhost:1313/blog/vim-file-browsing/</link>
       <pubDate>Tue, 06 Feb 2018 22:45:48 +0200</pubDate>
-      
-      <guid>https://5min.ninja/blog/vim-file-browsing/</guid>
-      <description>Vim is a great text editor. There&amp;rsquo;s a plethora of third party plugins to extend vim and help navigate file systems and also a heap of ways to use them. I&amp;rsquo;m not sure, if it&amp;rsquo;s common knowledge that vim has very nifty tricks up its sleeve for to tackle exploring the directory structures without additional plugins and opening up remote files using your beloved vim configuration. That is, if you are inclined to heavily configure your vim with or without plugins, then all that sweetness can be applied to editing files remotely instead of having to use some remote machine&amp;rsquo;s vanilla vim.</description>
+      <guid>http://localhost:1313/blog/vim-file-browsing/</guid>
+      <description>&lt;p&gt;Vim is a great text editor. There&amp;rsquo;s a plethora of third party plugins to extend&#xA;vim and help navigate file systems and also a heap of ways to use them. I&amp;rsquo;m not&#xA;sure, if it&amp;rsquo;s common knowledge that vim has very nifty tricks up its sleeve for&#xA;to tackle exploring the directory structures without additional plugins and&#xA;opening up remote files using your beloved vim configuration. That is, if you&#xA;are inclined to heavily configure your vim with or without plugins, then all&#xA;that sweetness can be applied to editing files remotely instead of having to use&#xA;some remote machine&amp;rsquo;s vanilla vim.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>About</title>
-      <link>https://5min.ninja/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Sun, 04 Feb 2018 21:55:05 +0200</pubDate>
-      
-      <guid>https://5min.ninja/about/</guid>
-      <description> Scrapbook of software related memorabilia.
-Current writers are:
-Itu Rojunen: Software engineer in a DSP plugin (music software) startup. twitter </description>
+      <guid>http://localhost:1313/about/</guid>
+      <description>&lt;div class=&#34;document&#34;&gt;&#xA;&#xA;&#xA;&lt;p&gt;Scrapbook of software related memorabilia.&lt;/p&gt;&#xA;&lt;p&gt;The name is ironic and came about, when I read one too many a title starting with &amp;quot;X days to Y&amp;quot;. I thought - how about &amp;quot;5 minutes to learn Haskell&amp;quot;?&lt;/p&gt;&#xA;&lt;p&gt;The name is an anagram of my real name - just never got used to the facebook provoked, MTV-cribs-like oversharing of privacy. I still feel as sharing your real name and address on the web is kinda stupid. But yeah - facebook started long ago and MTV-cribs was even further back in history.&lt;/p&gt;&lt;/div&gt;</description>
     </item>
-    
   </channel>
 </rss>

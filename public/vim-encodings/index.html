@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="http://localhost:1313/vim-encodings/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2018-02-08T09:49:18&#43;02:00" />
+    
+        <meta name="generator" content="Hugo 0.135.0">
+
+        <title>Fixing Misencoded Characters with Vim &middot; 5min ninja</title>
+        <link rel="canonical" href="http://localhost:1313/" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="http://localhost:1313/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="page">
+	<header class="post-header">
+        <h1 class="p-post-title">Fixing Misencoded Characters with Vim</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="http://localhost:1313//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2018-02-08T09:49:18&#43;02:00">February 8, 2018</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <p>There was some mysterious &lt;92&gt;, &lt;93&gt;, &lt;94&gt; and &lt;96&gt; tags in a painfully pretentious and clumsily condescending essay / diary entry / blog post I had written in the past (it wasn&rsquo;t stylistically cohesive either, as you can deduct from all the slashes). The encoding was latin[dos] as reported by vim which is probably because I used to use Windows. There was so many red flags in this equation that something had to be done - so I chose to fix those characters, as if that was the most burning issue in this ordeal. Frankly though, I should&rsquo;ve been given the file a few runs with <a href="https://linux.die.net/man/1/shred">shred</a> and thus sense a hint of closure with my past.</p>
+<p>What does one do when they need to figure out how to work with a command line or a curses based tool? Ask stackoverflow. Or rather, google for a readily available answer. I mean, why contribute to the infosharing by asking relevant questions or checking answers in the docs oneself? *cough* So in short, I found <a href="https://stackoverflow.com/a/2801132">the answer on stackoverflow</a>. However I found it after landing on atomic object&rsquo;s blog post about <a href="https://spin.atomicobject.com/2011/06/21/character-encoding-tricks-for-vim/">character encoding tricks for vim</a> that explains how to change
+encodings and check for character codes. It is as if I had learned this before, but something that I learned later pushed it away.. As if that was a thing.</p>
+<p>I usually validate the sed commands (that&rsquo;s what I call replacing in vim, because it basically is that) that I&rsquo;m about to use with using find.</p>
+<p>Finding &lt;92&gt; characters:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>/\%<span style="color:#a6e22e">x92</span></span></span></code></pre></div></p>
+<p>Replacing those characters with &lsquo;:
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:%<span style="color:#a6e22e">s</span><span style="color:#e6db74">/\%x92/</span>&#39;/<span style="color:#a6e22e">g</span></span></span></code></pre></div></p>
+<p>Changing the encoding of the file after the changes to utf-8 (when in doubt, use <a href="https://en.wikipedia.org/wiki/UTF-8">utf-8</a>):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-vim" data-lang="vim"><span style="display:flex;"><span>:<span style="color:#66d9ef">set</span> ++<span style="color:#a6e22e">enc</span>=<span style="color:#a6e22e">UTF</span><span style="color:#ae81ff">-8</span></span></span></code></pre></div></p>
+<p>ps. you can use undo after setting the encoding this way.</p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Fixing%20Misencoded%20Characters%20with%20Vim&url=http%3a%2f%2flocalhost%3a1313%2fvim-encodings%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fvim-encodings%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2flocalhost%3a1313%2fvim-encodings%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                        
+    </footer>
+</article>
+
+        pity the fool
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="http://localhost:1313/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="http://localhost:1313//about">Itu Rojunen</a> 2023 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="http://localhost:1313/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>

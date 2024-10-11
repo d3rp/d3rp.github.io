@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#"><!--<![endif]-->
+
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+                <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="author" content="Itu Rojunen">
+  
+	
+        <meta property="og:site_name" content="5min ninja">
+        <meta property="og:title" content="5min ninja">
+        <meta property="og:url" content="http://localhost:1313/start-vim/">
+        <meta property="og:description" content="">
+    
+        <meta property="og:type" content="article" />
+        <meta property="og:article:author" content="Itu Rojunen" />
+        <meta property="og:article:published_time" content="2018-03-26T20:19:59&#43;03:00" />
+    
+        <meta name="generator" content="Hugo 0.135.0">
+
+        <title>Vim in 2 Minutes &middot; 5min ninja</title>
+        <link rel="canonical" href="http://localhost:1313/" />
+        <link rel="stylesheet" type="text/css" href="http://localhost:1313/css/main.css"/>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Hind" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    </head>
+
+<body>
+<!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chrome/‎">install Google Chrome</a> to experience this site.</p><![endif]-->
+
+    <header id="site-header">
+        <div class="container">
+            <a href="http://localhost:1313/" alt="5min ninja"><h1 class="blog-title heading">5min ninja</h1></a>
+            <p class="blog-description"></p>
+        </div>
+    </header>
+<main class="content" role="main">
+	<div class="container">
+		<article class="page">
+	<header class="post-header">
+        <h1 class="p-post-title">Vim in 2 Minutes</h1>
+        
+        <section class="h-1">
+            
+            <section class="author">
+                
+                <p>Words by <a href="http://localhost:1313//about">Itu Rojunen</a></p>
+            </section>
+            
+            
+            <p class="f-post-time"><time datetime="2018-03-26T20:19:59&#43;03:00">March 26, 2018</time></p>
+        </section>
+        
+    </header>
+
+    <section class="post-content">
+        <ul>
+<li>Record desktop with screenkey on. Write a bunch of dada with &ldquo;quotes&rdquo; and &ldquo;we&rsquo;re in insert mode&rdquo; using the mnemonics mentioned here.</li>
+</ul>
+<p>Think quick: what do these acronyms stand for?</p>
+<ul>
+<li>rtfm</li>
+<li>irl</li>
+<li>tl;dr:</li>
+<li>lol</li>
+</ul>
+<p>Did you by any chance voice these out silently as full words instead of the initials the acronyms are constructed from? The idea behind the key shortcuts of vim is that every action is a mnemonic of a sequence of keystrokes instead of conjointly pressed keys:</p>
+<ul>
+<li>5w  = &ldquo;Go to 5th word&rdquo;</li>
+<li>ci&quot; = &ldquo;Change everything inside the hyphens&rdquo;</li>
+<li>dte = &ldquo;Delete until end of the word&rdquo;</li>
+<li>i   = &ldquo;Insert&rdquo;</li>
+</ul>
+<p>The last one refers to &lsquo;insert&rsquo; as in &ldquo;switch to the insert mode&rdquo;. Vim starts in &lsquo;Normal&rsquo; mode from which we can get to the &lsquo;insert&rsquo; mode by typing &lsquo;i&rsquo;.</p>
+<p><img src="http://localhost:1313/img/vim_diagram_1st_step.png" alt="diagram ftw"></p>
+<p>In &lsquo;insert&rsquo; mode we can write text and we can get back out of the &lsquo;insert&rsquo; mode with &rsquo;esc&rsquo; or &lsquo;ctrl-c&rsquo;.</p>
+<ul>
+<li>a diagram of modes illustrating what keys transission modes
+<img src="http://localhost:1313/img/diagram.png" alt="diagram ftw"></li>
+</ul>
+<p>Vim has different modes of operation and the shortcut keys may or may not act the same within each of those modes. I am refering to the &lsquo;insert&rsquo; mode for actually writing and the &rsquo;normal&rsquo; mode for all the trickery with the mnemonics.  This mode switching lends to the infamous confusion of &ldquo;How to exit vim!&rdquo;, because most of us we&rsquo;re used to get straight to the &ldquo;start typing&rdquo; mode when we launch a word editing program instead some limbo state waiting for the user to start deciding what mode they want to go into. So as one will, after starting vim, typically first wonder why can&rsquo;t they write anything and after getting to the &lsquo;insert&rsquo; mode - usually by accident
+after typing some additional character beyond individual keystrokes - it suddenly gets quite confusing: there&rsquo;s no menus and one needs to exit the &lsquo;insert&rsquo; mode before they can actually exit the vim.</p>
+<p><img src="https://cdn-images-1.medium.com/max/1200/1*AD1e170YTJaiUBypv1H9Ow.jpeg" alt="Orly-ExitingVim"></p>
+<p>So how do you exit vim? Through the &lsquo;Command-line&rsquo; mode. That is the mode that let&rsquo;s one save files and exit among other things. &lsquo;Command-line&rsquo; mode is accessible from the &rsquo;normal&rsquo; mode by typing &lsquo;:&rsquo;.</p>
+<ul>
+<li>Another diagram with cli mode added</li>
+</ul>
+<p>Now would be a really good time to go to the &lsquo;Command-line&rsquo; mode and type in &lsquo;vimtutor&rsquo; and follow that. It is a built in tutorial that takes a beginner vimmer through these concepts in detail.</p>
+<ul>
+<li>diagram with &lsquo;vimtutor&rsquo; -&gt; great success</li>
+</ul>
+<p>There&rsquo;s a million tutorials in using vim, but they usually start with the concepts and introduce a bunch of details before getting to the basic core of the program. This was my take on introducing vim in a way, that a beginner could get to the basics as soon as possible, and work their way deeper from there on their own.</p>
+
+    </section>
+
+    <hr>
+
+    <footer class="post-footer">
+        
+                        
+        <section class="f-2">
+            <section class="share">
+                <span>Share:
+                <a class="icon-twitter" href="http://twitter.com/share?text=Vim%20in%202%20Minutes&url=http%3a%2f%2flocalhost%3a1313%2fstart-vim%2f"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="fa fa-twitter"></i>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fstart-vim%2f"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="fa fa-facebook"></i>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http%3a%2f%2flocalhost%3a1313%2fstart-vim%2f"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+                </span>
+            </section>
+
+            
+        </section>
+                        
+    </footer>
+</article>
+
+        pity the fool
+	</div>
+</main>
+    <footer id="site-footer">
+        <div class="container">
+          
+          
+          
+          
+            <a href="https://www.github.com/d3rp" title="GitHub" target="_blank"><span class="tooltip"><i class="fa fa-github"></i></span></a>
+          
+          <a href="http://localhost:1313/index.xml" title="Get the RSS feed"><span class="tooltip"><i class="fa fa-rss"></i></span></a>
+          <section>&copy; <a href="http://localhost:1313//about">Itu Rojunen</a> 2023 | All rights reserved</section>
+          <section>Theme by <a href="http://www.jrdnbwmn.com">Jordan Bowman</a>. Generated with <a href="http://gohugo.io/">Hugo</a>.</section>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="http://localhost:1313/js/fittext.js"></script>
+    <script type="text/javascript">
+      $(".heading").fitText();
+    </script>
+
+
+
+</body>
+</html>
